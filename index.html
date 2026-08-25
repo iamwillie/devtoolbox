@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0f14">
+<meta name="description" content="DevToolbox — privacy-focused developer utilities that run locally in your browser.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22DevToolbox%22%2C%22short_name%22%3A%22DevToolbox%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0f14%22%2C%22theme_color%22%3A%22%230b0f14%22%2C%22description%22%3A%22Privacy-focused%20developer%20utilities.%22%7D">
+<title>DevToolbox</title>
+<style>
+:root{--bg:#0b0f14;--panel:#11161d;--panel2:#151b23;--panel3:#0e1319;--text:#e6edf3;--muted:#8b98a7;--faint:#5e6976;--border:#27313d;--accent:#61dafb;--accent2:#8b9cf5;--success:#57d9a3;--warn:#f0c674;--danger:#ff6b7a;--shadow:0 14px 40px rgba(0,0,0,.24);--radius:12px;--font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}
+[data-theme="light"]{--bg:#f4f6f8;--panel:#fff;--panel2:#f7f9fb;--panel3:#eef2f6;--text:#1d2733;--muted:#637180;--faint:#8b98a7;--border:#d9e0e7;--accent:#0b7fa7;--accent2:#5b64c2;--success:#168c5e;--warn:#a06a00;--danger:#c23a4b;--shadow:0 14px 40px rgba(31,41,55,.09)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden}button,input,textarea,select{font:inherit}button{cursor:pointer}textarea,input,select{color:var(--text);background:var(--panel3);border:1px solid var(--border);border-radius:9px;outline:none}textarea:focus,input:focus,select:focus,button:focus-visible{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
+.app{display:grid;grid-template-columns:260px 1fr;height:100%}.sidebar{border-right:1px solid var(--border);background:var(--panel);display:flex;flex-direction:column;min-width:0}.brand{padding:18px 18px 14px;border-bottom:1px solid var(--border)}.brand-row{display:flex;align-items:center;gap:10px}.logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#071019;font-weight:900}.brand-title{font-weight:800;letter-spacing:.2px}.brand-sub{font-size:12px;color:var(--muted);margin-top:4px}.side-scroll{padding:12px;overflow:auto;flex:1}.side-section{margin-bottom:16px}.side-title{font-size:11px;color:var(--faint);font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:8px 10px}.nav-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border:0;background:transparent;color:var(--muted);border-radius:8px;text-align:left}.nav-item:hover{background:var(--panel2);color:var(--text)}.nav-item.active{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--text)}.nav-icon{width:19px;text-align:center;font-size:15px}.nav-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nav-star{opacity:.6}.side-foot{border-top:1px solid var(--border);padding:10px;display:grid;gap:8px}.privacy-pill{display:flex;gap:8px;align-items:center;padding:9px 10px;border:1px solid var(--border);border-radius:9px;background:var(--panel2);font-size:12px;color:var(--muted)}.dot{width:8px;height:8px;border-radius:999px;background:var(--success);box-shadow:0 0 0 3px color-mix(in srgb,var(--success) 12%,transparent)}
+.main{min-width:0;display:flex;flex-direction:column}.topbar{height:62px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;padding:0 18px;background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(8px)}.search-trigger{flex:1;max-width:560px;border:1px solid var(--border);background:var(--panel2);border-radius:9px;color:var(--muted);height:38px;display:flex;align-items:center;gap:10px;padding:0 12px;text-align:left}.search-trigger b{margin-left:auto;border:1px solid var(--border);padding:2px 7px;border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--faint)}.top-actions{margin-left:auto;display:flex;gap:8px}.icon-btn,.btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:9px;height:38px;padding:0 11px}.icon-btn{width:38px;padding:0;display:grid;place-items:center}.btn.primary{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:700}.btn.ghost{background:var(--panel2)}.btn.danger{color:var(--danger)}.content{overflow:auto;padding:22px;flex:1}.view{display:none}.view.active{display:block}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;margin-bottom:18px}.hero h1{margin:0 0 7px;font-size:26px;letter-spacing:-.03em}.hero p{margin:0;color:var(--muted);max-width:720px;font-size:14px}.tag-row{display:flex;gap:7px;flex-wrap:wrap}.tag{font-size:11px;padding:5px 8px;border:1px solid var(--border);background:var(--panel2);border-radius:999px;color:var(--muted)}
+.tool-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.tool-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border)}.tool-icon{width:34px;height:34px;border-radius:9px;background:var(--panel2);display:grid;place-items:center;font-size:17px;flex:none}.tool-head h2{margin:0;font-size:17px}.tool-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.tool-head .head-actions{margin-left:auto;display:flex;gap:8px}.tool-body{padding:16px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stack{display:grid;gap:12px}.field{display:grid;gap:7px}.field label{font-size:12px;color:var(--muted);font-weight:700}.field textarea{min-height:260px;padding:12px;resize:vertical;font-family:var(--mono);font-size:12.5px;line-height:1.55}.field input,.field select{height:38px;padding:0 10px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar .spacer{margin-left:auto}.status{font-size:12px;color:var(--muted);padding:2px 0}.status.good{color:var(--success)}.status.bad{color:var(--danger)}.status.warn{color:var(--warn)}.output{background:var(--panel3);border:1px solid var(--border);border-radius:9px;padding:12px;min-height:84px;font-family:var(--mono);font-size:12px;line-height:1.55;white-space:pre-wrap;overflow:auto}.muted{color:var(--muted)}.mono{font-family:var(--mono)}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left}.table th{color:var(--muted);font-weight:700;background:var(--panel2);position:sticky;top:0}.claim-key{color:var(--accent)}.claim-value{white-space:pre-wrap;word-break:break-word}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--border);background:var(--panel2);border-radius:999px;padding:6px 9px;font-size:12px}.chip strong{font-family:var(--mono);font-size:11px}.empty{display:grid;place-items:center;min-height:260px;color:var(--muted);text-align:center;border:1px dashed var(--border);border-radius:9px}.empty strong{color:var(--text);display:block;margin-bottom:5px}.note{padding:10px 12px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--border));background:color-mix(in srgb,var(--accent) 6%,var(--panel2));border-radius:9px;color:var(--muted);font-size:12px}.alert{padding:10px 12px;border-radius:9px;border:1px solid color-mix(in srgb,var(--danger) 35%,var(--border));background:color-mix(in srgb,var(--danger) 7%,var(--panel2));color:var(--danger);font-size:12px}.success{color:var(--success)}.danger{color:var(--danger)}.warn{color:var(--warn)}.match-wrap{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.8}.match{background:color-mix(in srgb,var(--accent) 24%,transparent);color:var(--text);padding:1px 2px;border-radius:3px}.match-current{outline:1px solid var(--accent)}.capture{margin-top:8px;border-left:2px solid var(--accent);padding-left:9px}.capture code{font-family:var(--mono);color:var(--accent)}
+.dual{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}.swap{width:38px;height:38px}.preview{display:grid;place-items:center;min-height:300px;border:1px solid var(--border);border-radius:9px;background:var(--panel3);padding:12px}.qr-box{display:grid;place-items:center;background:#fff;padding:14px;border-radius:10px;box-shadow:0 12px 26px rgba(0,0,0,.12)}.qr-box svg{max-width:100%;height:auto;display:block}.range-row{display:flex;gap:12px;align-items:center}.range-row input{flex:1}.range-val{min-width:58px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.home-tool{border:1px solid var(--border);background:var(--panel);border-radius:12px;padding:13px;text-align:left;display:flex;gap:10px;align-items:flex-start;min-height:98px}.home-tool:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));transform:translateY(-1px)}.home-tool .title{font-weight:700;font-size:13px}.home-tool .desc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}.section-label{font-size:12px;font-weight:800;color:var(--muted);margin:18px 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.palette{position:fixed;inset:0;background:rgba(0,0,0,.48);display:none;align-items:flex-start;justify-content:center;padding-top:12vh;z-index:50}.palette.open{display:flex}.palette-panel{width:min(720px,calc(100vw - 28px));background:var(--panel);border:1px solid var(--border);border-radius:14px;box-shadow:0 28px 80px rgba(0,0,0,.35);overflow:hidden}.palette-input{width:100%;border:0;border-bottom:1px solid var(--border);border-radius:0;height:54px;padding:0 16px;font-size:15px;background:var(--panel)}.palette-list{max-height:430px;overflow:auto;padding:8px}.palette-item{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border:0;background:transparent;color:var(--text);border-radius:8px;text-align:left}.palette-item:hover,.palette-item.selected{background:var(--panel2)}.palette-k{margin-left:auto;color:var(--faint);font-size:11px}.suggestion{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--border));background:color-mix(in srgb,var(--accent) 6%,var(--panel));border-radius:10px}.suggestion-text{flex:1;font-size:12px}.toast-stack{position:fixed;right:18px;bottom:18px;display:grid;gap:8px;z-index:70}.toast{padding:10px 12px;border:1px solid var(--border);background:var(--panel);border-radius:9px;box-shadow:var(--shadow);font-size:12px;max-width:340px}.toast.good{border-color:color-mix(in srgb,var(--success) 35%,var(--border))}.toast.bad{border-color:color-mix(in srgb,var(--danger) 35%,var(--border))}
+.mobile-menu{display:none}.favorite{color:var(--faint)}.favorite.on{color:var(--warn)}.file-input{padding:8px;border:1px dashed var(--border);background:var(--panel2);border-radius:9px}.hidden{display:none!important}
+@media(max-width:1050px){.app{grid-template-columns:220px 1fr}.home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:820px){body{overflow:auto}.app{display:block;height:auto;min-height:100%}.sidebar{position:fixed;inset:0 auto 0 0;width:280px;z-index:45;transform:translateX(-100%);transition:transform .18s ease;box-shadow:var(--shadow)}.sidebar.open{transform:none}.main{min-height:100vh}.mobile-menu{display:grid}.topbar{position:sticky;top:0;z-index:30}.content{overflow:visible;padding:14px}.grid-2,.grid-3,.dual{grid-template-columns:1fr}.dual .swap{justify-self:center}.hero{display:block}.hero .tag-row{margin-top:10px}.tool-head{padding:14px}.tool-body{padding:14px}.home-grid{grid-template-columns:1fr}.search-trigger b{display:none}}
+/* Nexus visual system + dark-mode readability overrides */
+:root{
+  --bg:#04060b;--panel:rgba(12,18,28,.74);--panel2:rgba(18,27,42,.82);--panel3:rgba(7,11,18,.78);
+  --text:#f5f8ff;--muted:#8a96a8;--faint:#667389;--border:rgba(255,255,255,.11);
+  --accent:#56f5e4;--accent2:#769aff;--accent3:#b786ff;--success:#56f5a8;--warn:#ffc66d;--danger:#ff6b7a;
+  --shadow:0 18px 60px rgba(0,0,0,.24);--radius:18px;
+}
+[data-theme="light"]{
+  --bg:#edf3f7;--panel:rgba(255,255,255,.86);--panel2:rgba(255,255,255,.72);--panel3:rgba(255,255,255,.92);
+  --text:#111827;--muted:#5f6d7d;--faint:#7a8796;--border:rgba(15,23,42,.11);
+  --accent:#0e9f9d;--accent2:#4f6df5;--accent3:#8b5cf6;--success:#059669;--warn:#b45309;--danger:#dc2626;
+  --shadow:0 18px 50px rgba(15,23,42,.10)
+}
+html{background:var(--bg)}
+body{
+  color:var(--text);
+  background:
+    radial-gradient(circle at 28% 4%,rgba(118,154,255,.12),transparent 34rem),
+    radial-gradient(circle at 95% 0%,rgba(86,245,228,.10),transparent 30rem),var(--bg);
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.18;
+  background-image:radial-gradient(circle,rgba(130,210,255,.55) .7px,transparent .85px);
+  background-size:28px 28px;mask-image:linear-gradient(to bottom,#000,transparent 85%)
+}
+[data-theme="light"] body:after{opacity:.08;background-image:radial-gradient(circle,rgba(79,109,245,.35) .7px,transparent .85px)}
+.app{grid-template-columns:280px 1fr}
+.sidebar{
+  background:rgba(4,6,11,.74);border-right:1px solid var(--border);backdrop-filter:blur(18px);box-shadow:18px 0 45px rgba(0,0,0,.10)
+}
+[data-theme="light"] .sidebar{background:rgba(245,249,252,.84);box-shadow:18px 0 45px rgba(15,23,42,.05)}
+[data-theme="light"] .nav-item.active{color:#075f63;background:rgba(14,159,157,.13);border-color:rgba(14,159,157,.28);font-weight:700}
+[data-theme="light"] .nav-item.active .nav-icon,[data-theme="light"] .nav-item.active .nav-label{color:#075f63}
+[data-theme="light"] .nav-item.active .nav-star{color:#4f6df5;opacity:.9}
+.brand{padding:18px 18px 16px;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+.brand-row{gap:12px}
+.logo{
+  width:42px;height:42px;border-radius:13px;color:var(--text);font-family:var(--mono);
+  background:linear-gradient(135deg,rgba(86,245,228,.18),rgba(118,154,255,.14) 52%,rgba(183,134,255,.16));
+  border:1px solid rgba(86,245,228,.26);box-shadow:0 0 28px rgba(86,245,228,.10),inset 0 0 18px rgba(255,255,255,.025)
+}
+.brand-title{font-family:var(--mono);font-size:14px;letter-spacing:1.8px;text-transform:uppercase}
+.brand-sub{font-size:12px;color:var(--muted);margin-top:5px}
+.side-scroll{padding:14px 12px}
+.side-title{font-family:var(--mono);font-size:9.5px;color:var(--muted);letter-spacing:1.2px;font-weight:400;padding:10px;text-transform:uppercase}
+.nav-item{padding:10px 11px;border-radius:11px;color:var(--muted);transition:.18s ease;background:transparent}
+.nav-item:hover{background:rgba(86,245,228,.06);color:var(--text)}
+.nav-item.active{color:var(--cyan,#56f5e4);background:rgba(86,245,228,.085);border:1px solid rgba(86,245,228,.16)}
+.nav-icon{font-family:var(--mono);font-size:14px}
+.nav-star.on{color:var(--warn);opacity:1}
+.side-foot{border-top:1px solid var(--border);padding:12px}
+.privacy-pill{background:rgba(255,255,255,.025);border-radius:12px;padding:10px 11px}
+.dot{background:var(--success);box-shadow:0 0 0 3px color-mix(in srgb,var(--success) 12%,transparent),0 0 12px rgba(86,245,168,.35)}
+.topbar{
+  height:66px;padding:0 22px;border-bottom:1px solid var(--border);
+  background:rgba(4,6,11,.66);backdrop-filter:blur(20px);box-shadow:0 12px 40px rgba(0,0,0,.16);position:sticky;top:0;z-index:30
+}
+[data-theme="light"] .topbar{background:rgba(245,249,252,.78);box-shadow:0 12px 40px rgba(15,23,42,.06)}
+.search-trigger{height:40px;max-width:720px;background:rgba(255,255,255,.035);border-radius:12px;color:var(--muted);border:1px solid var(--border);font-family:var(--mono);font-size:10.5px;letter-spacing:.3px}
+[data-theme="light"] .search-trigger{background:rgba(255,255,255,.60)}
+.search-trigger:hover{border-color:rgba(86,245,228,.3);color:var(--text)}
+.search-trigger b{border:1px solid var(--border);background:rgba(255,255,255,.025);color:var(--muted);border-radius:7px}
+.icon-btn,.btn{border:1px solid var(--border);background:rgba(255,255,255,.035);color:var(--text);border-radius:11px;height:40px;font-family:var(--mono);font-size:10.5px;letter-spacing:.5px}
+[data-theme="light"] .icon-btn,[data-theme="light"] .btn{background:rgba(255,255,255,.55)}
+.icon-btn:hover,.btn:hover{border-color:rgba(86,245,228,.35);background:rgba(86,245,228,.075);color:var(--accent)}
+.btn.primary{background:rgba(86,245,228,.11);color:var(--accent);border-color:rgba(86,245,228,.26);font-weight:500}
+.btn.ghost{background:rgba(255,255,255,.025)}
+.btn.danger{color:var(--danger);border-color:rgba(255,107,122,.20);background:rgba(255,107,122,.035)}
+.content{padding:28px 32px 50px;max-width:1480px;width:100%;margin:0 auto}
+.hero{margin-bottom:18px;align-items:end}
+.hero h1{font-family:inherit;font-size:clamp(2rem,5vw,3.8rem);line-height:.98;letter-spacing:-.055em;font-weight:300;margin:0 0 10px}
+.hero h1 span{color:var(--accent);text-shadow:0 0 30px rgba(86,245,228,.14)}
+.hero p{font-size:13px;line-height:1.6;color:var(--muted)}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.7px;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.025);color:var(--muted)}
+.tool-card,.home-tool{position:relative;background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.018));border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);backdrop-filter:blur(18px)}
+[data-theme="light"] .tool-card,[data-theme="light"] .home-tool{background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.74));box-shadow:var(--shadow)}
+.tool-card:before,.home-tool:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;border-radius:inherit;background:radial-gradient(240px circle at var(--gx,50%) var(--gy,50%),rgba(86,245,228,.14),rgba(118,154,255,.07) 34%,transparent 70%);transition:opacity .18s ease;z-index:0}.tool-card.glow-active:before,.home-tool.glow-active:before{opacity:1}.tool-card>* ,.home-tool>*{position:relative;z-index:1}
+.tool-card:hover:before,.home-tool:hover:before{opacity:1}
+.tool-head{padding:18px 20px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.01)}
+.tool-icon{width:38px;height:38px;border-radius:12px;border:1px solid rgba(86,245,228,.18);color:var(--accent);background:rgba(86,245,228,.045);display:grid;place-items:center;font-family:var(--mono);font-size:15px;box-shadow:inset 0 0 18px rgba(255,255,255,.018)}
+.tool-head h2{font-size:1.05rem;font-weight:450}
+.tool-head p{font-size:.8rem;color:var(--muted);line-height:1.5}
+.tool-body{padding:20px}
+.field{gap:7px}.field label{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:400}
+textarea,input,select{color:var(--text);background:rgba(7,11,18,.78);border:1px solid var(--border);border-radius:13px}
+[data-theme="light"] textarea,[data-theme="light"] input,[data-theme="light"] select{background:rgba(255,255,255,.92);color:var(--text)}
+textarea:focus,input:focus,select:focus,button:focus-visible{border-color:rgba(86,245,228,.45);box-shadow:0 0 0 3px rgba(86,245,228,.07)}
+.field textarea{padding:13px;font-size:12.5px;line-height:1.6}
+.output,.preview{background:rgba(7,11,18,.54);border:1px solid var(--border);border-radius:13px}
+[data-theme="light"] .output,[data-theme="light"] .preview{background:rgba(255,255,255,.74)}
+.output{padding:13px}
+.status{font-size:11px;line-height:1.45}.note{border:1px solid rgba(86,245,228,.22);background:rgba(86,245,228,.05);border-radius:13px;color:var(--muted);font-size:11.5px;line-height:1.55;padding:11px 13px}
+.alert{border:1px solid rgba(255,107,122,.25);background:rgba(255,107,122,.05);color:var(--danger);border-radius:13px}
+.table{font-size:12px}.table th{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:400;background:rgba(255,255,255,.025)}.table td{color:var(--text)}
+.chip{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:999px}
+.empty{background:rgba(255,255,255,.012);border:1px dashed var(--border);border-radius:14px}.empty strong{color:var(--text)}
+.match{background:rgba(86,245,228,.20);color:var(--text)}.claim-key,.capture code{color:var(--accent)}
+.dual{gap:14px}.swap{color:var(--accent);font-family:var(--mono);display:grid;place-items:center}
+.qr-box{border-radius:13px;padding:14px;box-shadow:0 14px 32px rgba(0,0,0,.22)}
+.range-val{color:var(--muted)}
+.home-grid{gap:14px}.home-tool{padding:15px;min-height:108px;border-radius:16px;text-align:left;position:relative;transition:.18s ease}.home-tool:hover{border-color:rgba(86,245,228,.30);transform:translateY(-2px);box-shadow:var(--shadow)}
+.home-tool .title{font-weight:500;font-size:13px}.home-tool .desc{font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:5px}
+.section-label{font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;color:var(--muted);font-weight:400;margin:22px 0 11px;text-transform:uppercase}
+.palette{background:rgba(0,0,0,.60);backdrop-filter:blur(8px)}
+.palette-panel{background:rgba(12,18,28,.92);border:1px solid var(--border);border-radius:18px;box-shadow:0 28px 80px rgba(0,0,0,.40);backdrop-filter:blur(20px)}
+[data-theme="light"] .palette-panel{background:rgba(255,255,255,.94);box-shadow:0 28px 80px rgba(15,23,42,.16)}
+.palette-input{background:transparent;color:var(--text);height:58px;font-family:var(--mono);font-size:12px}
+.palette-item{color:var(--text);border-radius:11px}.palette-item:hover,.palette-item.selected{background:rgba(86,245,228,.07)}
+.toast{background:rgba(12,18,28,.94);border:1px solid var(--border);border-radius:12px;color:var(--text);box-shadow:var(--shadow);backdrop-filter:blur(18px)}
+[data-theme="light"] .toast{background:rgba(255,255,255,.96)}
+.mobile-menu{font-family:var(--mono)}
+@media(max-width:950px){.content{padding-left:20px;padding-right:20px}.app{grid-template-columns:240px 1fr}}
+@media(max-width:620px){.content{padding:20px 14px 44px}.topbar{padding:0 14px}.tool-card{border-radius:18px}.tool-body{padding:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+
+/* Readability + theme switch refinements */
+.home-tool{color:var(--text);}
+.home-tool .title{color:var(--text);font-size:14px;line-height:1.35;}
+.home-tool .desc{font-size:12px;line-height:1.5;color:var(--muted);}
+.section-label{font-size:10.5px;color:var(--text);letter-spacing:1.35px;font-weight:500;}
+.side-title{font-size:10px;color:var(--text);opacity:.78;}
+.nav-item{font-size:13px;}
+.nav-label{color:inherit;}
+.tool-head h2{font-size:1.12rem;color:var(--text);}
+.tool-head p{font-size:.86rem;color:var(--muted);}
+.hero p{font-size:14px;}
+.tag{font-size:10px;}
+.field label{font-size:10px;color:var(--text);opacity:.82;}
+.status{font-size:12px;}
+.note,.alert{font-size:12.5px;}
+.table{font-size:13px;}
+.table th{font-size:10px;}
+.table td{font-size:13px;}
+.palette-input{font-size:13px;}
+.palette-item{font-size:13px;}
+.palette-k{font-size:11px;}
+.suggestion-text{font-size:13px;}
+.toast{font-size:13px;}
+
+.theme-toggle{display:inline-flex;align-items:center;gap:9px;height:40px;padding:0 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.035);color:var(--text);font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:.18s ease;}
+[data-theme="light"] .theme-toggle{background:rgba(255,255,255,.58);}
+.theme-toggle:hover{border-color:rgba(86,245,228,.35);background:rgba(86,245,228,.075);}
+.theme-toggle-track{position:relative;width:44px;height:24px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid var(--border);box-shadow:inset 0 0 12px rgba(0,0,0,.18);flex:none;}
+.theme-toggle-thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(86,245,228,.42);transition:transform .2s ease,background .2s ease;}
+.theme-toggle[aria-checked="true"] .theme-toggle-thumb{transform:translateX(20px);background:var(--accent2);box-shadow:0 0 12px rgba(118,154,255,.34);}
+.theme-toggle-label{min-width:34px;text-align:left;}
+@media(max-width:820px){.theme-toggle{width:100%;justify-content:center;}.top-actions{width:auto;}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-row"><div class="logo">D</div><div><div class="brand-title">DevToolbox</div><div class="brand-sub">Local-first developer utilities</div></div></div></div>
+    <div class="side-scroll" id="sidebarNav"></div>
+    <div class="side-foot"><div class="privacy-pill"><span class="dot"></span><span>Runs locally in your browser</span></div><button class="btn ghost" id="installBtn" hidden>Install app</button></div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Open menu">☰</button>
+      <button class="search-trigger" id="paletteBtn"><span>⌘/Ctrl + K</span><span>Search tools, actions, categories…</span><b>Ctrl K</b></button>
+      <div class="top-actions"><button class="theme-toggle" id="themeBtn" type="button" role="switch" aria-checked="false" title="Toggle light and dark theme" aria-label="Toggle light and dark theme"><span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span><span class="theme-toggle-label" id="themeLabel">Dark</span></button></div>
+    </header>
+    <section class="content" id="content"></section>
+  </main>
+</div>
+<div class="palette" id="palette"><div class="palette-panel"><input class="palette-input" id="paletteInput" placeholder="Search tools or actions…" autocomplete="off"><div class="palette-list" id="paletteList"></div></div></div>
+<div class="toast-stack" id="toasts"></div>
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const state={theme:localStorage.getItem('dt_theme')||'dark',favs:JSON.parse(localStorage.getItem('dt_favs')||'[]'),recent:JSON.parse(localStorage.getItem('dt_recent')||'[]'),active:'home'};
+const icons={json:'{}',jwt:'⌘',uuid:'◈',time:'◷',base64:'B6',url:'↗',regex:'.*',qr:'▦',text:'Aa',hash:'#'};
+const tools=[
+{id:'json',name:'JSON Formatter',desc:'Format, minify, validate, and copy JSON.',icon:icons.json,cat:'Data',keys:'json formatter pretty print minify validate',view:jsonView},
+{id:'jwt',name:'JWT Decoder',desc:'Inspect header and claims locally.',icon:icons.jwt,cat:'Security',keys:'jwt token claims decode auth',view:jwtView},
+{id:'uuid',name:'UUID Generator',desc:'Generate UUID v4 values in bulk.',icon:icons.uuid,cat:'Generators',keys:'uuid guid random v4 generator',view:uuidView},
+{id:'time',name:'Unix Timestamp',desc:'Convert seconds or milliseconds to dates.',icon:icons.time,cat:'Conversion',keys:'unix timestamp epoch date time utc iso milliseconds seconds',view:timeView},
+{id:'base64',name:'Base64',desc:'Encode or decode text without uploads.',icon:icons.base64,cat:'Encoding',keys:'base64 encode decode text binary',view:base64View},
+{id:'url',name:'URL Parser',desc:'Inspect URL parts and query parameters.',icon:icons.url,cat:'Web',keys:'url uri parser query params encode decode percent',view:urlView},
+{id:'regex',name:'Regex Tester',desc:'Test matches, flags, and capture groups.',icon:icons.regex,cat:'Text',keys:'regex regexp regular expression tester matches groups flags',view:regexView},
+{id:'qr',name:'QR Generator',desc:'Create QR codes locally from text or URLs.',icon:icons.qr,cat:'Generators',keys:'qr qrcode barcode url text png svg error correction',view:qrView},
+{id:'text',name:'Text Transformer',desc:'Case, whitespace, lines, sorting, dedupe.',icon:icons.text,cat:'Text',keys:'text transformer camel pascal snake kebab constant uppercase lowercase trim duplicate sort',view:textView},
+{id:'hash',name:'Hash Generator',desc:'SHA-256/384/512 for text and files.',icon:icons.hash,cat:'Security',keys:'hash sha256 sha384 sha512 digest file crypto',view:hashView}
+];
+function persist(){localStorage.setItem('dt_theme',state.theme);localStorage.setItem('dt_favs',JSON.stringify(state.favs));localStorage.setItem('dt_recent',JSON.stringify(state.recent));}
+function toast(msg,type='good'){const d=document.createElement('div');d.className='toast '+type;d.textContent=msg;$('#toasts').appendChild(d);setTimeout(()=>d.remove(),2400)}
+function copyText(text){navigator.clipboard?.writeText(text).then(()=>toast('Copied to clipboard')).catch(()=>toast('Copy failed; select and copy manually','bad'))}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setTheme(){document.body.dataset.theme=state.theme;const b=$('#themeBtn');if(b){const light=state.theme==='light';b.setAttribute('aria-checked',String(light));$('#themeLabel').textContent=light?'Light':'Dark'}}
+function touchRecent(id){state.recent=[id,...state.recent.filter(x=>x!==id)].slice(0,6);persist();renderSidebar()}
+function toolById(id){return tools.find(t=>t.id===id)}
+function navButton(t,active=false){return `<button class="nav-item ${active?'active':''}" data-nav="${t.id}"><span class="nav-icon">${t.icon}</span><span class="nav-label">${esc(t.name)}</span><span class="nav-star favorite ${state.favs.includes(t.id)?'on':''}" data-fav="${t.id}">★</span></button>`}
+function renderSidebar(){const cats={};tools.forEach(t=>(cats[t.cat]??=[]).push(t));let html=`<div class="side-section"><div class="side-title">Workspace</div><button class="nav-item ${state.active==='home'?'active':''}" data-nav="home"><span class="nav-icon">⌂</span><span class="nav-label">All tools</span></button></div>`;
+if(state.recent.length){html+=`<div class="side-section"><div class="side-title">Recently used</div>${state.recent.map(id=>navButton(toolById(id),state.active===id)).join('')}</div>`}
+if(state.favs.length){html+=`<div class="side-section"><div class="side-title">Favourites</div>${state.favs.map(id=>navButton(toolById(id),state.active===id)).join('')}</div>`}
+Object.keys(cats).sort().forEach(cat=>{html+=`<div class="side-section"><div class="side-title">${esc(cat)}</div>${cats[cat].map(t=>navButton(t,state.active===t.id)).join('')}</div>`});$('#sidebarNav').innerHTML=html;$$('[data-nav]').forEach(b=>b.addEventListener('click',e=>{if(e.target.closest('[data-fav]'))return;openView(b.dataset.nav);$('#sidebar').classList.remove('open')}));$$('[data-fav]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const id=b.dataset.fav;state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];persist();renderSidebar();renderActiveFavorite()}))}
+function renderActiveFavorite(){const t=toolById(state.active);if(t){$$(`[data-fav="${t.id}"]`).forEach(x=>x.classList.toggle('on',state.favs.includes(t.id)))} }
+function openView(id){state.active=id;if(id==='home'){renderHome();renderSidebar();return}const t=toolById(id);if(!t)return;touchRecent(id);$('#content').innerHTML=t.view();renderSidebar();wireGlobalTool(t.id)}
+function toolShell(t,body){return `<div class="hero"><div><h1>${esc(t.name)}</h1><p>${esc(t.desc)}</p></div><div class="tag-row"><span class="tag">${esc(t.cat)}</span><button class="btn ghost" id="favoriteTool">★ ${state.favs.includes(t.id)?'Favourited':'Favourite'}</button></div></div><div class="tool-card"><div class="tool-head"><div class="tool-icon">${t.icon}</div><div><h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p></div><div class="head-actions"></div></div><div class="tool-body">${body}</div></div>`}
+function renderHome(){let recent=state.recent.map(toolById).filter(Boolean);$('#content').innerHTML=`<div class="hero"><div><h1>Developer utilities, in one place.</h1><p>Fast, local-first tools for everyday development work. Your inputs stay in this tab unless the browser itself needs an external platform service.</p></div><div class="tag-row"><span class="tag">10 tools</span><span class="tag">Client-side</span><span class="tag">Keyboard-first</span></div></div><div id="smartPaste" class="hidden"></div>${recent.length?`<div class="section-label">Recently used</div><div class="home-grid">${recent.map(homeCard).join('')}</div>`:''}<div class="section-label">All tools</div><div class="home-grid">${tools.map(homeCard).join('')}</div>`;$$('[data-open-tool]').forEach(b=>b.addEventListener('click',()=>openView(b.dataset.openTool)));}
+function homeCard(t){return `<button class="home-tool" data-open-tool="${t.id}"><div class="tool-icon">${t.icon}</div><div><div class="title">${esc(t.name)}</div><div class="desc">${esc(t.desc)}</div></div></button>`}
+function wireGlobalTool(id){const fav=$('#favoriteTool');if(fav)fav.onclick=()=>{state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];persist();renderSidebar();fav.textContent='★ '+(state.favs.includes(id)?'Favourited':'Favourite')};wireSmartPaste();}
+function btn(id,label,cls='btn ghost'){return `<button class="${cls}" id="${id}">${label}</button>`}
+function jsonView(){return toolShell(toolById('json'),`<div class="stack"><div class="dual"><div class="field"><label>Input</label><textarea id="jsonInput" spellcheck="false" placeholder='{"hello":"world","items":[1,2,3]}'></textarea></div><div class="swap">↔</div><div class="field"><label>Output</label><textarea id="jsonOutput" spellcheck="false" placeholder="Formatted JSON appears here"></textarea></div></div><div class="toolbar">${btn('jsonFormat','Pretty print','btn primary')}${btn('jsonMinify','Minify')}${btn('jsonValidate','Validate')}${btn('jsonCopy','Copy output')}${btn('jsonClear','Clear','btn ghost danger')}<span class="spacer status" id="jsonStatus">Ready</span></div></div>`)}
+function wireJson(){const i=$('#jsonInput'),o=$('#jsonOutput'),s=$('#jsonStatus');$('#jsonFormat').onclick=()=>{try{const v=JSON.parse(i.value);o.value=JSON.stringify(v,null,2);s.textContent='Valid JSON';s.className='status good'}catch(e){s.textContent='Invalid JSON: '+e.message;s.className='status bad'}};$('#jsonMinify').onclick=()=>{try{o.value=JSON.stringify(JSON.parse(i.value));s.textContent='Minified';s.className='status good'}catch(e){s.textContent='Invalid JSON: '+e.message;s.className='status bad'}};$('#jsonValidate').onclick=()=>{try{JSON.parse(i.value);s.textContent='Valid JSON';s.className='status good'}catch(e){s.textContent='Invalid JSON: '+e.message;s.className='status bad'}};$('#jsonCopy').onclick=()=>copyText(o.value);$('#jsonClear').onclick=()=>{i.value='';o.value='';s.textContent='Ready';s.className='status'};}
+function decodeJwtPart(part){part=part.replace(/-/g,'+').replace(/_/g,'/');part+='='.repeat((4-part.length%4)%4);const bin=atob(part);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
+function fmtClaim(k,v){if(typeof v!=='number'||!['iat','exp','nbf','auth_time','updated_at','created_at'].includes(k))return esc(typeof v==='object'?JSON.stringify(v):String(v));const d=new Date(v*1000);return `${esc(String(v))}  →  ${esc(Number.isNaN(d.getTime())?'Invalid date':d.toLocaleString())}`}
+function jwtView(){return toolShell(toolById('jwt'),`<div class="stack"><div class="field"><label>JWT</label><textarea id="jwtInput" spellcheck="false" style="min-height:180px" placeholder="eyJhbGciOi...header.payload.signature"></textarea></div><div id="jwtNotice" class="note">Decoding is local. This does <strong>not</strong> verify the JWT signature or prove token authenticity.</div><div id="jwtResult" class="empty"><div><strong>Paste a token to inspect it</strong><span>Header and payload are decoded locally; the signature is never verified.</span></div></div></div>`)}
+function wireJwt(){const input=$('#jwtInput'),out=$('#jwtResult');const run=()=>{const token=input.value.trim();if(!token){out.className='empty';out.innerHTML='<div><strong>Paste a token to inspect it</strong><span>Header and payload are decoded locally.</span></div>';return}try{const p=token.split('.');if(p.length!==3)throw new Error('A JWT should contain 3 dot-separated parts.');const h=decodeJwtPart(p[0]),pl=decodeJwtPart(p[1]);const rows=Object.keys(pl).sort().map(k=>`<tr><th><span class="claim-key">${esc(k)}</span></th><td class="claim-value">${fmtClaim(k,pl[k])}</td></tr>`).join('');const exp=typeof pl.exp==='number'?pl.exp*1000:null;let status='No exp claim';if(exp!==null)status=Date.now()>=exp?'<span class="danger">Appears expired</span>':'<span class="success">Appears active</span>';out.className='stack';out.innerHTML=`<div class="chips"><span class="chip">alg <strong>${esc(h.alg||'—')}</strong></span><span class="chip">typ <strong>${esc(h.typ||'—')}</strong></span><span class="chip">status <strong>${status}</strong></span></div><div class="grid-2"><div><div class="section-label">Header</div><div class="output">${esc(JSON.stringify(h,null,2))}</div></div><div><div class="section-label">Payload</div><div style="max-height:330px;overflow:auto;border:1px solid var(--border);border-radius:9px"><table class="table">${rows||'<tr><td>No claims</td></tr>'}</table></div></div></div><div class="note">JWT decoding only base64url-decodes the token. The signature is not checked, so the displayed claims are untrusted input.</div>`}catch(e){out.className='alert';out.textContent='Invalid JWT: '+e.message}};input.addEventListener('input',run)}
+function uuidView(){return toolShell(toolById('uuid'),`<div class="stack"><div class="grid-3"><div class="field"><label>Count</label><input id="uuidCount" type="number" min="1" max="500" value="10"></div><div class="field"><label>Format</label><select disabled><option>UUID v4</option></select></div><div class="field"><label>&nbsp;</label>${btn('uuidGenerate','Generate','btn primary')}</div></div><div class="field"><label>Output</label><textarea id="uuidOutput" spellcheck="false" style="min-height:300px" placeholder="Generated UUIDs appear here"></textarea></div><div class="toolbar">${btn('uuidCopy','Copy all')}${btn('uuidClear','Clear','btn ghost danger')}</div></div>`)}
+function wireUuid(){const o=$('#uuidOutput'),c=$('#uuidCount');$('#uuidGenerate').onclick=()=>{const n=Math.min(500,Math.max(1,Number(c.value)||1));const list=[];for(let i=0;i<n;i++)list.push(crypto.randomUUID?crypto.randomUUID():fallbackUUID());o.value=list.join('\n')};$('#uuidCopy').onclick=()=>copyText(o.value);$('#uuidClear').onclick=()=>o.value='';function fallbackUUID(){const a=crypto.getRandomValues(new Uint8Array(16));a[6]=(a[6]&15)|64;a[8]=(a[8]&63)|128;const s=[...a].map(x=>x.toString(16).padStart(2,'0'));return s.slice(0,4).join('')+'-'+s.slice(4,6).join('')+'-'+s.slice(6,8).join('')+'-'+s.slice(8,10).join('')+'-'+s.slice(10).join('')}}
+function timeView(){return toolShell(toolById('time'),`<div class="stack"><div class="grid-2"><div class="field"><label>Unix timestamp</label><div class="toolbar"><input id="tsInput" class="mono" placeholder="1720000000"><select id="tsUnit"><option value="s">seconds</option><option value="ms">milliseconds</option></select></div></div><div class="field"><label>Date/time input</label><input id="dateInput" type="datetime-local" step="1"></div></div><div class="toolbar">${btn('tsNow','Use now','btn ghost')}${btn('tsFromUnix','Timestamp → date','btn primary')}${btn('tsFromDate','Date → timestamp')}${btn('tsSwap','Swap direction')}</div><div id="tsOutput" class="output">Enter a value above.</div></div>`)}
+function wireTime(){const t=$('#tsInput'),u=$('#tsUnit'),d=$('#dateInput'),o=$('#tsOutput');function renderDate(ms){const dt=new Date(ms);if(Number.isNaN(dt.getTime()))throw new Error('Invalid timestamp');o.innerHTML=`Local: ${esc(dt.toLocaleString())}\nUTC:   ${esc(dt.toUTCString())}\nISO:   ${esc(dt.toISOString())}\nUnix seconds: ${Math.floor(ms/1000)}\nUnix ms:      ${ms}`}function unix(){const n=Number(t.value);if(!Number.isFinite(n))throw new Error('Invalid number');renderDate(u.value==='s'?n*1000:n)}function date(){const ms=new Date(d.value).getTime();if(Number.isNaN(ms))throw new Error('Invalid date');o.textContent=`Unix seconds: ${Math.floor(ms/1000)}\nUnix ms: ${ms}`;t.value=u.value==='s'?Math.floor(ms/1000):ms}$('#tsNow').onclick=()=>{const now=Date.now();t.value=u.value==='s'?Math.floor(now/1000):now;d.value=new Date(now-new Date().getTimezoneOffset()*60000).toISOString().slice(0,19)};$('#tsFromUnix').onclick=()=>{try{unix()}catch(e){o.textContent=e.message}};$('#tsFromDate').onclick=()=>{try{date()}catch(e){o.textContent=e.message}};$('#tsSwap').onclick=()=>{const v=t.value;t.value='';t.placeholder=d.value?'':'';d.value='';o.textContent='Direction swapped; choose an input.'}}
+function b64Encode(s){const bytes=new TextEncoder().encode(s);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin)}
+function b64Decode(s){const clean=s.replace(/\s/g,'');if(!/^[A-Za-z0-9+/]*={0,2}$/.test(clean)||clean.length%4===1)throw new Error('Malformed Base64 input.');const bin=atob(clean);return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(bin,c=>c.charCodeAt(0)))}
+function base64View(){return toolShell(toolById('base64'),`<div class="stack"><div class="dual"><div class="field"><label>Input</label><textarea id="b64Input" spellcheck="false" placeholder="Text or Base64"></textarea></div><button class="icon-btn swap" id="b64Swap">↔</button><div class="field"><label>Output</label><textarea id="b64Output" spellcheck="false"></textarea></div></div><div class="toolbar">${btn('b64Encode','Encode','btn primary')}${btn('b64Decode','Decode')}${btn('b64Copy','Copy output')}${btn('b64Clear','Clear','btn ghost danger')}<span class="spacer status" id="b64Status">UTF-8 safe</span></div></div>`)}
+function wireBase64(){const i=$('#b64Input'),o=$('#b64Output'),s=$('#b64Status');$('#b64Encode').onclick=()=>{try{o.value=b64Encode(i.value);s.textContent='Encoded';s.className='status good'}catch(e){s.textContent=e.message;s.className='status bad'}};$('#b64Decode').onclick=()=>{try{o.value=b64Decode(i.value);s.textContent='Decoded';s.className='status good'}catch(e){s.textContent=e.message;s.className='status bad'}};$('#b64Copy').onclick=()=>copyText(o.value);$('#b64Clear').onclick=()=>{i.value='';o.value='';s.textContent='UTF-8 safe';s.className='status'};$('#b64Swap').onclick=()=>{const a=i.value;i.value=o.value;o.value=a}}
+function urlView(){return toolShell(toolById('url'),`<div class="stack"><div class="dual"><div class="field"><label>URL</label><textarea id="urlInput" spellcheck="false" style="min-height:180px" placeholder="https://example.com:8080/path?q=hello&lang=en#section"></textarea></div><button class="icon-btn swap" id="urlSwap">↔</button><div class="field"><label>Encoded / decoded text</label><textarea id="urlEncodeInput" spellcheck="false" style="min-height:180px"></textarea></div></div><div class="toolbar">${btn('urlParse','Parse URL','btn primary')}${btn('urlEncode','Encode')}${btn('urlDecode','Decode')}${btn('urlCopy','Copy parsed')}${btn('urlClear','Clear','btn ghost danger')}</div><div id="urlResult" class="stack"></div></div>`)}
+function wireUrl(){const u=$('#urlInput'),x=$('#urlEncodeInput'),r=$('#urlResult');$('#urlParse').onclick=()=>{try{const p=new URL(u.value);const rows=[['Protocol',p.protocol],['Hostname',p.hostname],['Port',p.port||'(default)'],['Username',p.username||''],['Password',p.password?'••••':''],['Pathname',p.pathname],['Search',p.search||''],['Fragment',p.hash||'']].map(([k,v])=>`<tr><th>${esc(k)}</th><td class="mono">${esc(v)}</td></tr>`).join('');const params=[...p.searchParams.entries()];r.innerHTML=`<div style="border:1px solid var(--border);border-radius:9px;overflow:auto"><table class="table">${rows}</table></div><div class="section-label">Query parameters</div>${params.length?`<div style="border:1px solid var(--border);border-radius:9px;overflow:auto"><table class="table"><tr><th>Name</th><th>Value</th></tr>${params.map(([a,b])=>`<tr><td class="claim-key">${esc(a)}</td><td class="mono">${esc(b)}</td></tr>`).join('')}</table></div>`:'<div class="empty"><div><strong>No query parameters</strong><span>This URL has no search parameters.</span></div></div>'}`}catch(e){r.innerHTML=`<div class="alert">Invalid URL: ${esc(e.message)}</div>`}};$('#urlEncode').onclick=()=>{x.value=encodeURIComponent(u.value);$('#urlResult').innerHTML='<div class="status good">Encoded text is ready.</div>'};$('#urlDecode').onclick=()=>{try{x.value=decodeURIComponent(x.value);$('#urlResult').innerHTML='<div class="status good">Decoded text is ready.</div>'}catch(e){$('#urlResult').innerHTML=`<div class="alert">Invalid encoded text: ${esc(e.message)}</div>`}};$('#urlCopy').onclick=()=>copyText(r.innerText||'');$('#urlClear').onclick=()=>{u.value='';x.value='';r.innerHTML=''};$('#urlSwap').onclick=()=>{const a=u.value;u.value=x.value;x.value=a}}
+function regexView(){return toolShell(toolById('regex'),`<div class="stack"><div class="grid-2"><div class="field"><label>Regex</label><input id="regexInput" placeholder="(foo)\\s+(bar)"></div><div class="field"><label>Flags</label><input id="regexFlags" value="gim" placeholder="gim"></div></div><div class="field"><label>Test text</label><textarea id="regexText" spellcheck="false" placeholder="Paste text to test"></textarea></div><div class="toolbar">${btn('regexRun','Test regex','btn primary')}${btn('regexClear','Clear','btn ghost danger')}<span class="spacer status" id="regexStatus">Ready</span></div><div class="grid-2"><div><div class="section-label">Highlighted matches</div><div id="regexHighlight" class="output match-wrap">No test yet.</div></div><div><div class="section-label">Matches & capture groups</div><div id="regexMatches" class="output">No test yet.</div></div></div></div>`)}
+function wireRegex(){const inp=$('#regexInput'),flags=$('#regexFlags'),text=$('#regexText'),h=$('#regexHighlight'),m=$('#regexMatches'),s=$('#regexStatus');function run(){try{let f=[...new Set(flags.value.split(''))].filter(x=>'gimsu'.includes(x)).join('');const re=new RegExp(inp.value,f);const matches=[];if(re.global){let x;while((x=re.exec(text.value))!==null){matches.push(x);if(x[0]==='' )re.lastIndex++}}else{const x=re.exec(text.value);if(x)matches.push(x)}let idx=0;h.innerHTML='';if(!matches.length){h.textContent=text.value||'No matches';}else{matches.forEach((x,mi)=>{const start=x.index,end=x.index+x[0].length;h.insertAdjacentText('beforeend',text.value.slice(idx,start));const sp=document.createElement('span');sp.className='match';sp.textContent=x[0];h.appendChild(sp);idx=end});h.insertAdjacentText('beforeend',text.value.slice(idx))}m.innerHTML=matches.length?matches.map((x,i)=>`<div class="capture"><div>Match ${i+1}: <code>${esc(x[0])}</code> <span class="muted">@ ${x.index}</span></div>${x.slice(1).map((g,j)=>`<div>Group ${j+1}: <code>${esc(g??'undefined')}</code></div>`).join('')}</div>`).join(''):'No matches';s.textContent=`${matches.length} match${matches.length===1?'':'es'}`;s.className='status good'}catch(e){h.textContent='';m.textContent='';s.textContent='Invalid regex: '+e.message;s.className='status bad'}}$('#regexRun').onclick=run;$('#regexClear').onclick=()=>{inp.value='';text.value='';h.textContent='No test yet.';m.textContent='No test yet.';s.textContent='Ready';s.className='status'}}
+function textView(){return toolShell(toolById('text'),`<div class="stack"><div class="field"><label>Input</label><textarea id="textInput" spellcheck="false" placeholder="Paste text here"></textarea></div><div class="toolbar"><button class="btn" data-transform="camel">camelCase</button><button class="btn" data-transform="pascal">PascalCase</button><button class="btn" data-transform="snake">snake_case</button><button class="btn" data-transform="kebab">kebab-case</button><button class="btn" data-transform="constant">CONSTANT_CASE</button><button class="btn" data-transform="upper">UPPER</button><button class="btn" data-transform="lower">lower</button><button class="btn" data-transform="trim">Trim</button><button class="btn" data-transform="dedupe">Remove duplicate lines</button><button class="btn" data-transform="sort">Sort lines</button></div><div class="field"><label>Output</label><textarea id="textOutput" spellcheck="false"></textarea></div><div class="toolbar">${btn('textCopy','Copy output')}${btn('textSwap','Swap')}${btn('textClear','Clear','btn ghost danger')}</div></div>`)}
+function wireText(){const i=$('#textInput'),o=$('#textOutput');const words=s=>s.trim().split(/[^A-Za-z0-9]+/).filter(Boolean);$$('[data-transform]').forEach(b=>b.onclick=()=>{const v=i.value,k=b.dataset.transform;let out=v;if(k==='upper')out=v.toUpperCase();else if(k==='lower')out=v.toLowerCase();else if(k==='trim')out=v.trim();else if(k==='dedupe')out=[...new Set(v.split(/\r?\n/))].join('\n');else if(k==='sort')out=v.split(/\r?\n/).sort((a,b)=>a.localeCompare(b)).join('\n');else{const w=words(v);if(k==='camel')out=w.map((x,n)=>n?x[0].toUpperCase()+x.slice(1).toLowerCase():x.toLowerCase()).join('');if(k==='pascal')out=w.map(x=>x[0].toUpperCase()+x.slice(1).toLowerCase()).join('');if(k==='snake')out=w.map(x=>x.toLowerCase()).join('_');if(k==='kebab')out=w.map(x=>x.toLowerCase()).join('-');if(k==='constant')out=w.map(x=>x.toUpperCase()).join('_')}o.value=out});$('#textCopy').onclick=()=>copyText(o.value);$('#textSwap').onclick=()=>{const a=i.value;i.value=o.value;o.value=a};$('#textClear').onclick=()=>{i.value='';o.value=''}}
+async function hashBuffer(buf,alg){return new Uint8Array(await crypto.subtle.digest(alg,buf))}function hex(a){return [...a].map(b=>b.toString(16).padStart(2,'0')).join('')}
+function hashView(){return toolShell(toolById('hash'),`<div class="stack"><div class="grid-2"><div class="field"><label>Text input</label><textarea id="hashText" spellcheck="false" placeholder="Text to hash"></textarea></div><div class="field"><label>File input</label><input id="hashFile" class="file-input" type="file"><div class="note">Files are read in-browser and never uploaded by this page.</div></div></div><div class="grid-3"><div class="field"><label>SHA-256</label><div class="toolbar"><input id="sha256" readonly><button class="icon-btn" data-copy-input="sha256">⧉</button></div></div><div class="field"><label>SHA-384</label><div class="toolbar"><input id="sha384" readonly><button class="icon-btn" data-copy-input="sha384">⧉</button></div></div><div class="field"><label>SHA-512</label><div class="toolbar"><input id="sha512" readonly><button class="icon-btn" data-copy-input="sha512">⧉</button></div></div></div><div class="toolbar">${btn('hashTextBtn','Hash text','btn primary')}${btn('hashFileBtn','Hash file')}${btn('hashClear','Clear','btn ghost danger')}<span class="spacer status" id="hashStatus">Ready</span></div></div>`)}
+function wireHash(){const ti=$('#hashText'),fi=$('#hashFile'),s=$('#hashStatus');async function setVals(buf){$('#sha256').value=hex(await hashBuffer(buf,'SHA-256'));$('#sha384').value=hex(await hashBuffer(buf,'SHA-384'));$('#sha512').value=hex(await hashBuffer(buf,'SHA-512'));s.textContent='Hashes calculated locally';s.className='status good'}$('#hashTextBtn').onclick=async()=>{try{await setVals(new TextEncoder().encode(ti.value));}catch(e){s.textContent=e.message;s.className='status bad'}};$('#hashFileBtn').onclick=async()=>{if(!fi.files[0]){s.textContent='Choose a file first';s.className='status bad';return}try{await setVals(await fi.files[0].arrayBuffer())}catch(e){s.textContent=e.message;s.className='status bad'}};$('#hashClear').onclick=()=>{ti.value='';fi.value='';['sha256','sha384','sha512'].forEach(x=>$('#'+x).value='');s.textContent='Ready';s.className='status'};$$('[data-copy-input]').forEach(b=>b.onclick=()=>copyText($('#'+b.dataset.copyInput).value))}
+
+/* Compact QR encoder: byte mode, versions 1-4, all masks, four ECC levels. */
+const QR={
+  caps:{L:[17,32,53,78],M:[14,26,42,62],Q:[11,20,32,46],H:[7,14,24,34]},
+  blocks:{L:[[1,26,19],[1,44,34],[1,70,55],[1,100,80]],M:[[1,26,16],[1,44,28],[1,70,44],[2,50,32]],Q:[[1,26,13],[1,44,22],[2,35,17],[2,50,24]],H:[[1,26,9],[1,44,16],[2,35,13],[4,25,9]]},
+  align:[[ ],[6,18],[6,22],[6,26]],ecl:{L:1,M:0,Q:3,H:2},
+  mul(a,b){let r=0;while(b){if(b&1)r^=a;a=(a<<1)^((a&128)?0x11d:0);b>>=1}return r},
+  genPoly(n){let g=[1];for(let i=0;i<n;i++){const ng=new Array(g.length+1).fill(0),a=(()=>{let x=1;for(let j=0;j<i;j++)x=this.mul(x,2);return x})();for(let j=0;j<g.length;j++){ng[j]^=g[j];ng[j+1]^=this.mul(g[j],a)}g=ng}return g},
+  rs(data,n){const gen=this.genPoly(n),res=new Array(n).fill(0);for(const b of data){const f=b^res[0];res.shift();res.push(0);for(let i=0;i<n;i++)res[i]^=this.mul(gen[i+1],f)}return res},
+  bitbuf(){return {a:[],put(v,n){for(let i=n-1;i>=0;i--)this.a.push((v>>>i)&1)},len(){return this.a.length}}},
+  encode(text,level='M'){
+    const bytes=[...new TextEncoder().encode(text)];let v=1;while(v<4&&bytes.length>this.caps[level][v-1])v++;if(bytes.length>this.caps[level][3])throw new Error(`Text is too long for this local QR encoder (${this.caps[level][3]} UTF-8 bytes max at version 4 / ${level}).`);
+    const [blockCount,totalBytes,dataBytes]=this.blocks[level][v-1],total=blockCount*totalBytes,dataN=blockCount*dataBytes,bb=this.bitbuf();bb.put(4,4);bb.put(bytes.length,8);bytes.forEach(b=>bb.put(b,8));bb.put(0,Math.min(4,total*8-bb.len()));while(bb.len()%8)bb.put(0,1);let pads=true;while(bb.len()<dataN*8){bb.put(pads?0xec:0x11,8);pads=!pads}
+    const data=[];for(let i=0;i<bb.a.length;i+=8){let x=0;for(let j=0;j<8;j++)x=(x<<1)|bb.a[i+j];data.push(x)}
+    const blocks=[];let pos=0;for(let k=0;k<blockCount;k++){const d=data.slice(pos,pos+dataBytes);pos+=dataBytes;blocks.push({d,e:this.rs(d,totalBytes-dataBytes)})}
+    const code=[];const maxD=Math.max(...blocks.map(b=>b.d.length));const maxE=Math.max(...blocks.map(b=>b.e.length));for(let i=0;i<maxD;i++)blocks.forEach(b=>{if(i<b.d.length)code.push(b.d[i])});for(let i=0;i<maxE;i++)blocks.forEach(b=>{if(i<b.e.length)code.push(b.e[i])});
+    const raw=code.flatMap(b=>{const a=[];for(let i=7;i>=0;i--)a.push((b>>>i)&1);return a});
+    let best=null;for(let mask=0;mask<8;mask++){const m=this.draw(v,level,raw,mask);const p=this.penalty(m);if(!best||p<best.p)best={m,p,mask}}return {matrix:best.m,size:best.m.length,version:v,mask:best.mask,level};
+  },
+  draw(v,level,bits,mask){const n=v*4+17,m=Array.from({length:n},()=>Array(n).fill(null));const set=(x,y,val)=>{if(x>=0&&y>=0&&x<n&&y<n)m[y][x]=!!val};const finder=(cx,cy)=>{for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const d=Math.max(Math.abs(dx),Math.abs(dy));set(cx+dx,cy+dy,d!==2&&d!==4)}};finder(3,3);finder(n-4,3);finder(3,n-4);
+    for(let i=8;i<n-8;i++){if(m[6][i]===null)m[6][i]=i%2===0;if(m[i][6]===null)m[i][6]=i%2===0}
+    const ap=this.align[v-1]||[];for(const yy of ap)for(const xx of ap){if(m[yy][xx]!==null)continue;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const d=Math.max(Math.abs(dx),Math.abs(dy));set(xx+dx,yy+dy,d!==1)}}
+    set(8,n-8,true);
+    const fmt=this.formatBits(level,mask);for(let i=0;i<15;i++){const a=fmt>>i&1;let r,c;if(i<6){r=i;c=8}else if(i<8){r=i+1;c=8}else{r=n-15+i;c=8}if(r<n)m[r][c]=!!a;if(i<8){r=8;c=n-i-1}else{r=8;c=15-i}if(c<n)m[r][c]=!!a}for(let i=0;i<8;i++)m[8][n-1-i]=!!(fmt>>i&1);m[8][8]=!!(fmt>>8&1);
+    const maskFn=[(r,c)=>(r+c)%2===0,(r,c)=>r%2===0,(r,c)=>c%3===0,(r,c)=>(r+c)%3===0,(r,c)=>(Math.floor(r/2)+Math.floor(c/3))%2===0,(r,c)=>(r*c)%2+(r*c)%3===0,(r,c)=>((r*c)%2+(r*c)%3)%2===0,(r,c)=>((r+c)%2+(r*c)%3)%2===0][mask];let bi=0,up=true;for(let x=n-1;x>0;x-=2){if(x===6)x--;for(let i=0;i<n;i++){const y=up?n-1-i:i;for(let dx=0;dx<2;dx++){const xx=x-dx;if(m[y][xx]!==null)continue;let val=bi<bits.length?bits[bi++]:0;if(maskFn(y,xx))val^=1;m[y][xx]=!!val}}up=!up}return m;
+  },
+  formatBits(level,mask){let d=(this.ecl[level]<<3)|mask;let x=d<<10;const g=0x537;for(let i=14;i>=10;i--)if((x>>>i)&1)x^=g<<(i-10);return ((d<<10)|x)^0x5412},
+  penalty(m){const n=m.length;let p=0;const run=a=>{let s=1;for(let i=1;i<=a.length;i++){if(i<a.length&&a[i]===a[i-1])s++;else{if(s>=5)p+=3+s-5;s=1}}};for(let y=0;y<n;y++)run(m[y]);for(let x=0;x<n;x++){const a=[];for(let y=0;y<n;y++)a.push(m[y][x]);run(a)}for(let y=0;y<n-1;y++)for(let x=0;x<n-1;x++)if(m[y][x]===m[y+1][x]&&m[y][x]===m[y][x+1]&&m[y][x]===m[y+1][x+1])p+=3;for(let y=0;y<n;y++)for(let x=0;x<n-6;x++)if(m[y][x]&&!m[y][x+1]&&m[y][x+2]&&m[y][x+3]&&m[y][x+4]&&!m[y][x+5]&&m[y][x+6]){let pre=x>=4&&[0,1,2,3].every(k=>!m[y][x-1-k]),post=x+11<=n&&[0,1,2,3].every(k=>!m[y][x+7+k]);if(pre||post)p+=40}for(let x=0;x<n;x++)for(let y=0;y<n-6;y++)if(m[y][x]&&!m[y+1][x]&&m[y+2][x]&&m[y+3][x]&&m[y+4][x]&&!m[y+5][x]&&m[y+6][x]){let pre=y>=4&&[0,1,2,3].every(k=>!m[y-1-k][x]),post=y+11<=n&&[0,1,2,3].every(k=>!m[y+7+k][x]);if(pre||post)p+=40}let dark=0;for(const r of m)for(const v of r)dark+=v?1:0;p+=Math.floor(Math.abs(100*dark/n/n-50)/5)*10;return p},
+  svg(matrix,size){const n=matrix.length,margin=4,cell=size/n,total=size+margin*2;let path='';for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(matrix[y][x])path+=`<rect x="${margin+x*cell}" y="${margin+y*cell}" width="${cell+0.02}" height="${cell+0.02}"/>`;return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${total} ${total}" width="${size}" height="${size}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><g fill="#000">${path}</g></svg>`}
+};
+function qrView(){return toolShell(toolById('qr'),`<div class="stack"><div class="grid-2"><div class="stack"><div class="field"><label>Text or URL</label><textarea id="qrInput" spellcheck="false" style="min-height:180px" placeholder="https://example.com"></textarea></div><div class="grid-3"><div class="field"><label>Size</label><div class="range-row"><input id="qrSize" type="range" min="160" max="720" value="320"><span class="range-val" id="qrSizeVal">320 px</span></div></div><div class="field"><label>Error correction</label><select id="qrLevel"><option value="L">L · 7%</option><option value="M" selected>M · 15%</option><option value="Q">Q · 25%</option><option value="H">H · 30%</option></select></div><div class="field"><label>&nbsp;</label>${btn('qrGenerate','Generate','btn primary')}</div></div><div class="note">QR generation is local. The compact built-in encoder supports UTF-8 byte mode and versions 1–4; very large payloads are rejected instead of being sent elsewhere.</div></div><div><div class="preview" id="qrPreview"><div class="muted">Your QR code will appear here.</div></div></div></div><div class="toolbar">${btn('qrPng','Export PNG')}${btn('qrSvg','Export SVG')}${btn('qrClear','Clear','btn ghost danger')}<span class="spacer status" id="qrStatus">Ready</span></div></div>`)}
+function wireQr(){let svg='';const input=$('#qrInput'),size=$('#qrSize'),level=$('#qrLevel'),prev=$('#qrPreview'),status=$('#qrStatus');$('#qrSize').oninput=()=>$('#qrSizeVal').textContent=size.value+' px';$('#qrGenerate').onclick=()=>{try{const q=QR.encode(input.value,level.value);svg=QR.svg(q.matrix,Number(size.value));prev.innerHTML='<div class="qr-box">'+svg+'</div>';status.textContent=`Version ${q.version} · mask ${q.mask} · ECC ${q.level}`;status.className='status good'}catch(e){prev.innerHTML=`<div class="alert">${esc(e.message)}</div>`;status.textContent='Could not generate';status.className='status bad'}};$('#qrSvg').onclick=()=>{if(!svg)return toast('Generate a QR code first','bad');const blob=new Blob([svg],{type:'image/svg+xml'});downloadBlob(blob,'devtoolbox-qr.svg')};$('#qrPng').onclick=async()=>{if(!svg)return toast('Generate a QR code first','bad');const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=c.height=Number(size.value);const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);c.toBlob(b=>downloadBlob(b,'devtoolbox-qr.png'),'image/png')};img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)};$('#qrClear').onclick=()=>{input.value='';prev.innerHTML='<div class="muted">Your QR code will appear here.</div>';svg='';status.textContent='Ready';status.className='status'}}
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function smartDetect(value){
+  const v=value.trim();
+  if(!v)return null;
+  if(/^\s*[\[{]/.test(v)){
+    try{JSON.parse(v);return {id:'json',reason:'Looks like valid JSON'}}
+    catch(e){if(/^\s*[\[{]/.test(v))return {id:'json',reason:'Looks like JSON'}}
+  }
+  if(/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(v))return {id:'jwt',reason:'Looks like a JWT'};
+  if(/^(?:\d{10}|\d{13})$/.test(v))return {id:'time',reason:'Looks like a Unix timestamp'};
+  if(/^(?:https?:\/\/|ftp:\/\/)/i.test(v))return {id:'url',reason:'Looks like a URL'};
+  if(/^(?:[A-Za-z0-9+/]{8,}={0,2})$/.test(v)&&v.length%4===0)return {id:'base64',reason:'Looks like Base64'};
+  return null;
+}
+function wireSmartPaste(){const els=[$('textarea'),$('input')].filter(Boolean);els.forEach(el=>{el.addEventListener('paste',()=>setTimeout(()=>showSuggestion(el),0));el.addEventListener('input',()=>{if(el.value.length>18)showSuggestion(el)})});}
+function showSuggestion(el){const hit=smartDetect(el.value);if(!hit)return;let holder=document.getElementById('smartPaste');if(!holder){holder=document.createElement('div');holder.id='smartPaste';document.querySelector('.content').prepend(holder)}holder.className='suggestion';const t=toolById(hit.id);holder.innerHTML=`<div class="tool-icon">${t.icon}</div><div class="suggestion-text"><strong>Detected ${esc(t.name)}</strong><div class="muted">${esc(hit.reason)} — choose where to send it.</div></div><button class="btn primary" id="suggestOpen">Open tool</button><button class="btn ghost" id="suggestDismiss">Dismiss</button>`;$('#suggestOpen').onclick=()=>{const value=el.value;openView(hit.id);const target=[$('textarea'),$('input')].find(x=>x&&x.id.toLowerCase().includes(hit.id));if(target)target.value=value;};$('#suggestDismiss').onclick=()=>holder.remove();}
+function paletteItems(q){const n=q.trim().toLowerCase();const list=tools.filter(t=>!n||`${t.name} ${t.desc} ${t.cat} ${t.keys}`.toLowerCase().includes(n));return list.map(t=>`<button class="palette-item" data-palette="${t.id}"><span class="tool-icon">${t.icon}</span><span><strong>${esc(t.name)}</strong><small class="muted"> ${esc(t.cat)}</small></span><span class="palette-k">Enter</span></button>`).join('')||'<div class="empty" style="min-height:120px"><div><strong>No matches</strong><span>Try another search term.</span></div></div>'}
+function openPalette(){const p=$('#palette'),i=$('#paletteInput');p.classList.add('open');i.value='';$('#paletteList').innerHTML=paletteItems('');i.focus()}function closePalette(){$('#palette').classList.remove('open')}
+$('#paletteBtn').onclick=openPalette;$('#palette').addEventListener('click',e=>{if(e.target===e.currentTarget)closePalette()});$('#paletteInput').addEventListener('input',e=>$('#paletteList').innerHTML=paletteItems(e.target.value));$('#paletteList').addEventListener('click',e=>{const b=e.target.closest('[data-palette]');if(b){openView(b.dataset.palette);closePalette()}});document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openPalette()}if(e.key==='Escape')closePalette()});$('#themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';persist();setTheme()};$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(!window.deferredPrompt)return;window.deferredPrompt.prompt();await window.deferredPrompt.userChoice;window.deferredPrompt=null;$('#installBtn').hidden=true};
+function wireActive(){const id=state.active;if(id==='json')wireJson();if(id==='jwt')wireJwt();if(id==='uuid')wireUuid();if(id==='time')wireTime();if(id==='base64')wireBase64();if(id==='url')wireUrl();if(id==='regex')wireRegex();if(id==='qr')wireQr();if(id==='text')wireText();if(id==='hash')wireHash();}
+const oldOpen=openView;openView=function(id){oldOpen(id);wireActive()};
+function initCardGlow(){
+  let raf=0,lastTarget=null,lastX=0,lastY=0;
+  const update=()=>{
+    raf=0;
+    const el=lastTarget;
+    if(!el)return;
+    const r=el.getBoundingClientRect();
+    el.style.setProperty('--gx',((lastX-r.left)/Math.max(1,r.width)*100).toFixed(2)+'%');
+    el.style.setProperty('--gy',((lastY-r.top)/Math.max(1,r.height)*100).toFixed(2)+'%');
+    el.classList.add('glow-active');
+  };
+  document.addEventListener('pointermove',e=>{
+    const el=e.target.closest?.('.tool-card,.home-tool');
+    if(!el){
+      if(lastTarget) lastTarget.classList.remove('glow-active');
+      lastTarget=null;
+      return;
+    }
+    lastTarget=el; lastX=e.clientX; lastY=e.clientY;
+    if(!raf)raf=requestAnimationFrame(update);
+  });
+  document.addEventListener('pointerout',e=>{
+    const from=e.target.closest?.('.tool-card,.home-tool');
+    const to=e.relatedTarget?.closest?.('.tool-card,.home-tool');
+    if(from && from!==to){from.classList.remove('glow-active');from.style.removeProperty('--gx');from.style.removeProperty('--gy');}
+  });
+}
+initCardGlow();
+setTheme();renderSidebar();renderHome();wireSmartPaste();
+})();
+</script>
+</body>
+</html>
