@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0f14">
-<meta name="description" content="DevToolbox — privacy-focused developer utilities that run locally in your browser.">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="DevToolbox">
-<link rel="manifest" href="./manifest.webmanifest">
-
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAE7klEQVR42u3dPVYaURiAYZzDsbGypknnDtyGObZWrsAuJQVluqzAKq0nboMd2NlQuwRTxMlBjoDInfsz3/N2xoQE+J65d2AwJ9PTs9eJFLTOQyAAJAAkACQAJAAkACQAJAAkACQAJAAkAKTWm47ljly/PM09nXl7OL9YtH4fTlq8HNqwQxEOwL6hf5xdLoxf3q5Wy3nrGKoHsG3wDXw7IGqGUC2AzcE38O2DqBFCdQAMPgghARh8EMICWB9+gx8LQmkERQEYfBBKQ+gMv0q1/ryXem+nM/yKjCD7Fqi/kwZf27ZEObdDneFXbatBzpWgM/yKjKAz/IqMoDP8ioygM/yKjKAbevilmuepy6VYqnF+uiG1Gn7VvhXqDL8iI/BTIRS6pJdCOPrH6c+P1buvv/+cZfl7U18uMfVU6pjB3/z1XBCq2wI5+scd/kN/T03nAs4BFLokABz9Hf1bXQWsALICOPqrtVKtAs2+CnS1Wn70oJgMjX8L9NHw97++7XtScgAlrvj8zIBDkL5DXt/P/V7AMXOYZAXItf/fN9jffs8gCHgeEG4LtGv4ISi7CrT2TnAzJ8G7hnl96Puvn29W//+ck+N0j//95N/jevvr/WN+f/f2eN8tm3pBovlrgTaHH4I89QMf9iS4htf/tw2/c4J45wFfPRFu9hxg3/BDoFED6Lc3ECgkAAgUHgAECg8AAoUHAIHCA4BA4QFAoPAAIFB4ABAoPAAIFB4ABAoLYP3qTwgUcgWAQOG3QBAoNAAIFB4ABAoPAAKFBwCBwgOAQOEBQKDwACBQeAAQyH+QAQEAggAAQQCAIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIoiMAAILQCACAIDQCACAIjQAACEIjAACCTyEAQBAAIAgAEAQACAIABAEAw3a1WvrgBgTxABh8CMICMPgQ2AIJgogAHP0hsAIIAgAEQcUAHs4vFm9blrmRgeBQLAm3zPP1eWx+BVh/4NUOghLDn6LpmJ4kDfP49i9MPN+sPtzmtDr81Z4DfHaoDX/5laDl4U8GYIjzgMfZ5dYB3/U95UOwbfhzPTcp5u5kenr2eswNXL88zd/u9MKYjL9979PkPDAdewJc7RZIda8Eu1ZmJ8EKtyUKfQ7g/QAV2oodvf2xBVL4kgCwCqjFo78VQFaAVDdkFVBrR38rgKwAKW/MKqCWjv5WAFkBUt+gVUCtHP0HWwEgUAvDn2ULBIFqnp/BAAyhVXEbap66HP9oq4Bq2/pk2wJBoFqHPwsACFTr8GcDAIFqHP6sACBQbcM/mST4TPBX6j9HPJn4LLHeHxBzv3pY5FKI9TtpNTD8pYa/GAAIVMPwF9sC2RIZ/NKDXxWATQQgjH/waxj+qgCAYPABAMHgA7AbAhDtDHzNg98MgH0QgKhv4FsY/OYAHIJB5WrtMvgmAUBh2AGQEuSnQggACQAJAAkACQAJAAkACQAJAAkACQBpHP0FiPAocxqyssYAAAAASUVORK5CYII=">
+<meta name="description" content="DevToolbox — privacy-focused developer utilities that run locally in your browser.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22DevToolbox%22%2C%22short_name%22%3A%22DevToolbox%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0f14%22%2C%22theme_color%22%3A%22%230b0f14%22%2C%22description%22%3A%22Privacy-focused%20developer%20utilities.%22%7D">
 <title>DevToolbox</title>
 <style>
 :root{--bg:#0b0f14;--panel:#11161d;--panel2:#151b23;--panel3:#0e1319;--text:#e6edf3;--muted:#8b98a7;--faint:#5e6976;--border:#27313d;--accent:#61dafb;--accent2:#8b9cf5;--success:#57d9a3;--warn:#f0c674;--danger:#ff6b7a;--shadow:0 14px 40px rgba(0,0,0,.24);--radius:12px;--font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}
@@ -643,91 +642,67 @@ setTheme();renderSidebar();renderHome();wireSmartPaste();
 </script>
 
 <script>
-/* Nexus-style standalone/PWA support */
 const STANDALONE_MODE =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
 document.body.classList.toggle('standalone', STANDALONE_MODE);
 
 (function setupEmbeddedManifest(){
-  try{
+  try {
     const startUrl = location.href.split('#')[0];
     const manifest = {
-      id: startUrl,
-      name: 'DevToolbox',
-      short_name: 'DevToolbox',
-      description: 'Privacy-focused developer utilities.',
-      start_url: startUrl,
-      scope: new URL('.', startUrl).href,
-      display: 'standalone',
-      display_override: ['window-controls-overlay','standalone','minimal-ui'],
-      orientation: 'any',
-      background_color: '#04060b',
-      theme_color: '#04060b',
-      icons: [{
-        src: './icons/icon-192.png',
-        sizes: '192x192',
-        type: 'image/png',
-        purpose: 'any maskable'
-      },{
-        src: './icons/icon-512.png',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any maskable'
-      }]
+      id:startUrl,
+      name:'DevToolbox',
+      short_name:'DevToolbox',
+      description:'Privacy-focused developer utilities that run locally in your browser.',
+      start_url:startUrl,
+      scope:new URL('.',startUrl).href,
+      display:'standalone',
+      display_override:['window-controls-overlay','standalone','minimal-ui'],
+      orientation:'any',
+      background_color:'#04060b',
+      theme_color:'#04060b',
+      prefer_related_applications:false,
+      icons:[
+        {src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAE7klEQVR42u3dPVYaURiAYZzDsbGypknnDtyGObZWrsAuJQVluqzAKq0nboMd2NlQuwRTxMlBjoDInfsz3/N2xoQE+J65d2AwJ9PTs9eJFLTOQyAAJAAkACQAJAAkACQAJAAkACQAJAAkAKTWm47ljly/PM09nXl7OL9YtH4fTlq8HNqwQxEOwL6hf5xdLoxf3q5Wy3nrGKoHsG3wDXw7IGqGUC2AzcE38O2DqBFCdQAMPgghARh8EMICWB9+gx8LQmkERQEYfBBKQ+gMv0q1/ryXem+nM/yKjCD7Fqi/kwZf27ZEObdDneFXbatBzpWgM/yKjKAz/IqMoDP8ioygM/yKjKAbevilmuepy6VYqnF+uiG1Gn7VvhXqDL8iI/BTIRS6pJdCOPrH6c+P1buvv/+cZfl7U18uMfVU6pjB3/z1XBCq2wI5+scd/kN/T03nAs4BFLokABz9Hf1bXQWsALICOPqrtVKtAs2+CnS1Wn70oJgMjX8L9NHw97++7XtScgAlrvj8zIBDkL5DXt/P/V7AMXOYZAXItf/fN9jffs8gCHgeEG4LtGv4ISi7CrT2TnAzJ8G7hnl96Puvn29W//+ck+N0j//95N/jevvr/WN+f/f2eN8tm3pBovlrgTaHH4I89QMf9iS4htf/tw2/c4J45wFfPRFu9hxg3/BDoFED6Lc3ECgkAAgUHgAECg8AAoUHAIHCA4BA4QFAoPAAIFB4ABAoPAAIFB4ABAoLYP3qTwgUcgWAQOG3QBAoNAAIFB4ABAoPAAKFBwCBwgOAQOEBQKDwACBQeAAQyH+QAQEAggAAQQCAIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIIAAAAggAgAACACCAAAAIoiMAAILQCACAIDQCACAIjQAACEIjAACCTyEAQBAAIAgAEAQACAIABAEAw3a1WvrgBgTxABh8CMICMPgQ2AIJgogAHP0hsAIIAgAEQcUAHs4vFm9blrmRgeBQLAm3zPP1eWx+BVh/4NUOghLDn6LpmJ4kDfP49i9MPN+sPtzmtDr81Z4DfHaoDX/5laDl4U8GYIjzgMfZ5dYB3/U95UOwbfhzPTcp5u5kenr2eswNXL88zd/u9MKYjL9979PkPDAdewJc7RZIda8Eu1ZmJ8EKtyUKfQ7g/QAV2oodvf2xBVL4kgCwCqjFo78VQFaAVDdkFVBrR38rgKwAKW/MKqCWjv5WAFkBUt+gVUCtHP0HWwEgUAvDn2ULBIFqnp/BAAyhVXEbap66HP9oq4Bq2/pk2wJBoFqHPwsACFTr8GcDAIFqHP6sACBQbcM/mST4TPBX6j9HPJn4LLHeHxBzv3pY5FKI9TtpNTD8pYa/GAAIVMPwF9sC2RIZ/NKDXxWATQQgjH/waxj+qgCAYPABAMHgA7AbAhDtDHzNg98MgH0QgKhv4FsY/OYAHIJB5WrtMvgmAUBh2AGQEuSnQggACQAJAAkACQAJAAkACQAJAAkACQBpHP0FiPAocxqyssYAAAAASUVORK5CYII=',sizes:'192x192',type:'image/png',purpose:'any maskable'},
+        {src:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAPVElEQVR42u3dMVIjVxuFYUGpSIiIlThjB2xDU6QTzQqcOSQgnMwrcOSUMtvQDsgmUcwScOQpuwxNS+pW3/ud56ly4t/mdwnQeft2D1ysr67fVgBAlEsvAQAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAAAgAAAAAQAA1LX2EnCI+9eXB68CtOvp5vbRq8AYF+ur6zcvAwYeBAICAGMPiAIEAAYfEAQIAAw+IAgQABh9QAwgADD6gBhAAFBt9J83d77hoWHb/W6R9wYxIAAoMPxGHsSBEBAAFB99Yw+iQAwIAIoPv7EHlogCISAAWGD4jT7QSgwIAQHAzMNv9IGWY0AICAAmHH6jD/QWA0JAABh+ow8Ex4AQEADG3/ADoSEgAgSA4Tf8gBBAABh+ww8IAQRA0PgbfSA9BkSAAIi76jf+gAgQAgLAVT+A0wARIAAqjr/hB4SACBAAhh9ACAiB2V16CYw/wJIOfT88x69FdwLA5F+Mhh9gmtMAJwECwFU/QGgECAEB4KofwGkAB/AMgPEHaNIh75+eCxAAxh9ABDCCWwAzjL/hB5je2FsCbgc4ATD+AIGnAU4CBIDxBxABCADjDyAC+IdnAE784jH8AMsZ81yAZwKcABh/gMDTACcBAsD4A4gABIDxBxABAgDjDyACBIDxN/4AIkAAGH/jDyACBIDxB0AECADjD4AIEABZXzwAeB8XAMWu/gGwBwIg7JOtGgFyTgESIyAuAIw/gAgQAZ4BMP4A3t8jRQXAZ3XniwMgOwKSTgFiAsBDfwDYi7AAcN8fgEPe7xMiwDMAxh/A+36g8gHgvj8Ax7z/Vz8FKB0A7vsDYEdCTwBc/QNgB4ICwNE/AFNEQNVTAA8BAoATAFf/ADgFSDgFKBcAxh8AERB6AgAADLtYX12/ufoHqO+v3/aD//uX7xsv0mq12u53g1vydHNbYkvWPtUAuaP/0T8rBuorcwvA1T/A8eM/5b/bu5RnAZwAABj+wY/jNMAJgKt/gJDxTz8NSDgFuEz/JAIYfxGQuB/dB4Bf+ANwnoFOfi6g4v74OQAAEKjrAHDvH+C8V+ZppwCVnwVwAgBg/EWAE4CcagOA5D3pNgA8/AeAPXIC4OofiLPkUbxnAZwAqC0AnAJ0uEvlTgBc/QNgXwIDAAD4XHe/DMjx/+m2+91Q4XqBAI7cp6eb225OCUr9NkDH/8eN/kf/nBgA+P/ObPc7vw6YOsM/9O8KAYB6unoGwPH/+cZ/jo8DUF1PO1XmIUDH//OO9na/EwLQmC/fN5H/3/ZGALDAFbsIAKihmwBw/N/OQIsAgP73qsQJgOP/+Yb5lz83IgAatsRRfPLxf6XdcQuAT8dfBIAIMP71CABX/6Ou/EUAgAA4u6H7KY7/57vyH/v3RQBknAK4+h+/Pz08B+AEgFEjLwIgOwKMvxMAGjTV+H42/iIAMiPA+AsAgq/8RQD0FQFTjPZUHwcBcBR//r+98RcBUP80wPDX36+L9dX1W68voAcATx/bY8f/33583X/0+fEOAA19/3/7ffj7/Y9f9wd9PN/jPz8PH+5Uy78e2G8DdOU/ycd5LwK2+503CGjIoQNPbZ4BMP6zfjy3AwAEAEXHXwQACIBJeQCwn/EXAQB97Vi3JwAeAGxv/EUAkKjXPXILwPiLAIBAAsD4iwAAAYDxFwEAAoDuffRDekQAgABABIgAAAGACBABAAJgIX4HgAgA6MXQLrX6swCcAIgAEQDgBAARIAIABAAiQAQACABEgAgAEACIABEAIAAQASIAQAAgAkQAgABABIgAAAGACBABAAIAESACAAQAIkAEAAgARIAIABAAiAARACAAEAEACABEAAACABEAgABABAAgABABAAIARACAAAARACAAQAQACAAQAQACABEgAgAEACJABAAIAESACAAQAIgAEQAgAOjY8+ZOBAAIAESACAAQAIgAEQAgABABIgBAACACRACAAEAEiAAAAYAIEAEAAgARIAIABAAiQAQACABEgAgAEACIABEAIAAQASIAQAAgAkQAIAC8BIgAEQAIABABIgAQACACRAAgAEAEiABAAIAIABAAIAIABACIAAABACIAQACACAAQACACAAQAiAAAAYAIEAEAAgARIAIABAAiQAQACABEgAgAEACIABEAIAAQASIAQAAgAkQAIABABIgAQACACBABgAAAESACAAEAIkAEAAIARIAIAAQAiAARAAgAEAEiABAAIAJEACAAQASIAEAAgAgAEAAgAgAEAIgAAAEAIgBAAIAIABAAIAIABACIAAABgAgQAYAAABEgAgABACJABAACAESACAAEAIgAEQAIABABIgAQACACRAAgAEAEiABAAIAIEAGAAAARIAIAAQAiQAQAAgBEgAgABACIABEACAAQASIAEAAgAkQAIABABIgAQACACBABgAAAEQAIAEAEAAIAEAGAAABEACAAABEACABABAACABABgAAAESACAAEAIkAEAAIARIAIAAQAiAARAAgAEAEiABAAIAJEACAAQASIAEAAgAgQAYAAABEgAgABACJABAACAESACAABAIgAEQACABABIgAEACACRAAIAEAEiAAQAIAIEAEgAAARAAgAQAQAAgAQAYAAAEQAIAAAEQAIAEAEAAIAEAGAAAARIAIAAQAiQAQAAgBEgAgABACIABEACAAQASIABICXAESACAABAIgAEQACABABIgAEACACRAAIAEAEiAAQAIAIEAEgAAARIAJAAAAiQASAAABEgAgAAQCIABEAAgAQASIABAAgAkQACABABAACABABgAAARAAgAAARAAgAQAQAAgAQASAAAEQACABABIgAEACACBABIAAAESACQAAAIkAEgAAARIAIAAEAiAARAAIAEAEiAAQAIAJEAAgAQASIABAAgAgQASAAABEgAkAAACJABIAAAESACAABAIgAEQACABABIgAEACACRAACAEAEgAAAEAEgAABEAAgAABEAAgBABIAAABABIAAARAAIAEAEiAAQAIAIEAEgAAARIAJAAAAiQASAAABEgAgAAQCIABEAAgAQASIABAAgAkQACABABIgAEACACBABCAAAESACEAAAIkAEIAAARIAIQAAAiAARgAAAEAEiAAEAIAJEAAIAQASIAAQAgAgAAQAgAkAAAIgAEAAAIgAEAIAIAAEAIAJAAAAiQASAAABEgAgAAQCIABEAAgAQASIAAQAgAkQAAgBABIgABACACBABCAAAESACEAAAIkAEIAAARIAIQAAAiAARgAAAEAEiAAEAIAJEAAIAQASIAAQAgAgQAQgAABEAAgBABIAAABABIAAARAAIAAARAAIAQAQgALwEACIAAQCACEAAACACEAAAIkAEIAAARIAIQAAAiAARgAAAEAEiAAEAIAJEAAIAQASIAAQAgAgQAQgAABEgAhAA/Md2v/v5FyACRAACwOgDIkAEIAAqjT8gAkQAAiDsqh8QASIAAeCqHxABIgABYPwBESACEADGHxABIgABACACRAACwNU/IAJEAALA+AMiQAQIgMY83dw+Dozlg08dIAJEQEMXcQ/H7JkAABABIgABEFiOXgQQASIAAQAgAkQAAgBABCyghQhBAACIAOOPAAAQAcafyADwRwEBEWD87VHRAGj1z04CVIwA45+1Y24BAIgA4x9IADT8jQ54bzjHWBt/AQBAWAQY/1zrnv/jt/vdw/PmznMCM7y5AG19n773E0N/fN2f9MN6jP80O+QEYCYpDwIuMcTGH3JPAoy//XILIDQCjD/kRoDxRwAAhEXAVOPvIkIA0OGVuW9cyIwAV/50FwBD91Eq/kTAOQfa+ENmBBj/6Q3tTw/PrzkBCIoA4w+ZETD1+HsvcQLAGb65p/hGm+rjAP1FgCt/SgdA9V8MdMp4G34QAa7+7c57uvlBQE83t4/3ry8PvsFX7/5AEN+gIAI+e28w/ufbKwGAb0KgRAR436mnzDMA1W8DAIwd6qnH2vjX3JuuAiDlxwIDtDLaxr/uTrkFAFA8Ao65LWD46ysVAH47IMDwmA/FgNEftzMCYCHpfxoAYKoYYPp96um/1w8CAoBA5QLAnwYAwL4UDQB/GgAAu+QEwCkAAHYlJQCcAgBgj5wAOAUAwJ4IAACgbAB8duziFACAOa/+e74d7QQAAJwA1DsFAAD7E3gC4DYAAPajaAB4FgCAc45/hdNnzwAAQKAyAeAUAABX/04AAICUAHAKAICrfycAAEBKADgFAMDVf+gJgAgAwPgHBgAAEBoATgEAcPXvBEAEAGAHUgLALwoCwI6EngC4FQDAMe//1S8iPQQoAgC87weKCIAxFeeLAcD4p1z9R50AeB4AAHsRGABjPqlOAQCyr/6TLhY9AyACALy/B4oLAM8DABj/9Kv/2BMAEQBg/JPHPzYAUj/ZANiD+ACYqhoB8D4uAApWny8egLrjn3waHH8CIAIAjL8AEAEiAMD4CwARIAIAjL8AEAEiAMD4CwARAIDxFwAiAADjLwBEAADGv10X66vrNy/Dx+5fX0aN/PPmzhcYQEPDb/ydAMx+EuA0AMD4CwARAIDxFwAiAADj3x7PABxo7DMBq5XnAgDOOfzG3wlAEycBTgMAjL8AEAEAGP+muAVwgkNuB6xWbgkAzHHhZPwFQBchIAIAXPULAKcBALjqX4RnACZy6BejZwMAjL8TAKcBvpgBw2/4BUBiBAgBwPAbfwEQHAFCADD8xl8AOA0AcNWPAEg8DRADQNoVv/EXAEJACACGHwEgBIQAYPgRAOERIASACsNv/AWAEDiRGAB6Gn3DLwCYOATEANDy6Bt+AcAZQkAMAK2MvuEXACwUAmIAWGL0Db8AoKEQEAXAXGNv+AUAHcaAKABjb/QFAEJAHICRN/wCADEAYPQFAGIAMPoIAMQAYPQRAAgCwOAjABAEgMFHACAKAGOPAEAgAAYeAQAAnMGllwAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAABAAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAQAAAAAIAABAAAIAAAAAEAAAgAAAAAQAACAAAEAAAQIy/AWCF7ASREWc1AAAAAElFTkSuQmCC',sizes:'512x512',type:'image/png',purpose:'any maskable'}
+      ]
     };
-    const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = url;
+    const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('link');
+    link.rel='manifest';
+    link.href=url;
     document.head.appendChild(link);
-  }catch(error){
-    console.warn('DevToolbox embedded manifest setup skipped:', error);
+  } catch(error) {
+    console.warn('DevToolbox embedded manifest setup skipped:',error);
   }
 })();
 
-let deferredInstallPrompt = null;
-const installBtn = document.getElementById('installAppBtn');
-
-function refreshInstallButton(){
-  if(!installBtn) return;
-  if(STANDALONE_MODE){
-    installBtn.hidden = true;
-    return;
-  }
-  installBtn.hidden = !deferredInstallPrompt;
+let deferredInstallPrompt=null;
+const installAppBtn=document.getElementById('installAppBtn');
+function updateInstallUi(){
+  if(!installAppBtn) return;
+  installAppBtn.hidden=!deferredInstallPrompt || STANDALONE_MODE;
 }
-
-window.addEventListener('beforeinstallprompt', event => {
+window.addEventListener('beforeinstallprompt',event=>{
   event.preventDefault();
-  deferredInstallPrompt = event;
-  refreshInstallButton();
+  deferredInstallPrompt=event;
+  updateInstallUi();
 });
-
-installBtn?.addEventListener('click', async () => {
+installAppBtn?.addEventListener('click',async()=>{
   if(!deferredInstallPrompt) return;
   deferredInstallPrompt.prompt();
-  const choice = await deferredInstallPrompt.userChoice;
-  if(choice.outcome === 'accepted'){
-    deferredInstallPrompt = null;
-    refreshInstallButton();
-  }
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+  updateInstallUi();
 });
-
-window.addEventListener('appinstalled', () => {
-  deferredInstallPrompt = null;
-  refreshInstallButton();
-  if(typeof toast === 'function') toast('DevToolbox installed');
+window.addEventListener('appinstalled',()=>{
+  deferredInstallPrompt=null;
+  updateInstallUi();
+  if(typeof toast==='function') toast('DevToolbox installed');
 });
-
-refreshInstallButton();
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
-}
+updateInstallUi();
 </script>
 
 </body>
