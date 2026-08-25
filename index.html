@@ -421,6 +421,18 @@ html,body{height:100%;overflow:hidden}
     padding:11px 16px;
   }
 }
+
+/* Center text inside the rounded tool-category pill beside Favourite */
+.hero .tag-row .tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  line-height:1;
+  min-height:34px;
+  padding-top:0;
+  padding-bottom:0;
+}
 </style>
 </head>
 <body data-theme="dark">
@@ -477,7 +489,7 @@ function setTheme(){document.body.dataset.theme=state.theme;const b=$('#themeBtn
 function touchRecent(id){state.recent=[id,...state.recent.filter(x=>x!==id)].slice(0,6);persist();renderSidebar()}
 function toolById(id){return tools.find(t=>t.id===id)}
 function navButton(t,active=false){return `<button class="nav-item ${active?'active':''}" data-nav="${t.id}"><span class="nav-icon">${t.icon}</span><span class="nav-label">${esc(t.name)}</span><span class="nav-star favorite ${state.favs.includes(t.id)?'on':''}" data-fav="${t.id}">★</span></button>`}
-function sideSection(id,title,items){const activeInSection=items.some(t=>state.active===t.id);const collapsed=!!state.collapsed[id]&&!activeInSection;return `<div class="side-section ${collapsed?'collapsed':''}" data-section="${esc(id)}"><button class="side-title" type="button" data-section-toggle="${esc(id)}" aria-expanded="${String(!collapsed)}"><span class="side-title-label">${esc(title)}</span><span class="side-chevron" aria-hidden="true">▾</span></button><div class="side-items">${items.map(t=>navButton(t,state.active===t.id)).join('')}</div></div>`}
+function sideSection(id,title,items){const collapsed=!!state.collapsed[id];return `<div class="side-section ${collapsed?'collapsed':''}" data-section="${esc(id)}"><button class="side-title" type="button" data-section-toggle="${esc(id)}" aria-expanded="${String(!collapsed)}"><span class="side-title-label">${esc(title)}</span><span class="side-chevron" aria-hidden="true">▾</span></button><div class="side-items">${items.map(t=>navButton(t,state.active===t.id)).join('')}</div></div>`}
 function renderSidebar(){const cats={};tools.forEach(t=>(cats[t.cat]??=[]).push(t));let html=sideSection('workspace','Workspace',[{id:'home',name:'All tools',icon:'⌂',cat:'Workspace'}]);if(state.recent.length)html+=sideSection('recent','Recently used',state.recent.map(id=>toolById(id)).filter(Boolean));if(state.favs.length)html+=sideSection('favorites','Favourites',state.favs.map(id=>toolById(id)).filter(Boolean));Object.keys(cats).sort().forEach(cat=>{html+=sideSection(`cat:${cat}`,cat,cats[cat])});$('#sidebarNav').innerHTML=html;$$('[data-section-toggle]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.sectionToggle;state.collapsed[id]=!state.collapsed[id];persist();renderSidebar()}));$$('[data-nav]').forEach(b=>b.addEventListener('click',e=>{if(e.target.closest('[data-fav]'))return;openView(b.dataset.nav);$('#sidebar').classList.remove('open')}));$$('[data-fav]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const id=b.dataset.fav;state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];persist();renderSidebar();renderActiveFavorite()}))}
 function renderActiveFavorite(){const t=toolById(state.active);if(t){$$(`[data-fav="${t.id}"]`).forEach(x=>x.classList.toggle('on',state.favs.includes(t.id)))} }
 function openView(id){state.active=id;if(id==='home'){renderHome();renderSidebar();return}const t=toolById(id);if(!t)return;touchRecent(id);$('#content').innerHTML=t.view();renderSidebar();wireGlobalTool(t.id)}
