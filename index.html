@@ -473,7 +473,7 @@ html,body{height:100%;overflow:hidden}
 'use strict';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const state={theme:localStorage.getItem('dt_theme')||'dark',favs:JSON.parse(localStorage.getItem('dt_favs')||'[]'),recent:JSON.parse(localStorage.getItem('dt_recent')||'[]'),collapsed:JSON.parse(localStorage.getItem('dt_collapsed')||'{}'),active:'home'};
-const icons={json:'{}',jwt:'⌘',uuid:'◈',time:'◷',base64:'B6',url:'↗',regex:'.*',qr:'▦',text:'Aa',hash:'#',diff:'≠',count:'123',http:'↔',xml:'<>',csv:'CSV',escape:'\\',image64:'IMG',meta:'ⓘ',path:'$.',scratch:'✎'};
+const icons={json:'{}',jwt:'⌘',uuid:'◈',time:'◷',base64:'B6',url:'↗',regex:'.*',qr:'▦',text:'Aa',hash:'#',diff:'≠',count:'123',http:'↔',xml:'<>',csv:'CSV',escape:'\\',image64:'IMG',meta:'ⓘ',path:'$.',scratch:'✎',cron:'⏱'};
 const tools=[
 {id:'json',name:'JSON Formatter',desc:'Format, minify, validate, and copy JSON.',icon:icons.json,cat:'Data',keys:'json formatter pretty print minify validate',view:jsonView},
 {id:'jwt',name:'JWT Decoder',desc:'Inspect header and claims locally.',icon:icons.jwt,cat:'Security',keys:'jwt token claims decode auth',view:jwtView},
@@ -494,7 +494,8 @@ const tools=[
 {id:'image64',name:'Image → Base64',desc:'Drop an image to create a browser-side data URI.',icon:icons.image64,cat:'Files',keys:'image base64 data uri dataurl png jpg jpeg webp gif',view:image64View},
 {id:'meta',name:'Image Metadata Viewer',desc:'Inspect browser-readable image dimensions, size, format, and metadata.',icon:icons.meta,cat:'Files',keys:'image metadata dimensions size format type width height file',view:metaView},
 {id:'path',name:'JSON Path Explorer',desc:'Browse JSON as a tree and copy paths such as users[0].address.city.',icon:icons.path,cat:'Data',keys:'json path explorer tree jq path property array object browse',view:pathView},
-{id:'scratch',name:'Scratchpad',desc:'A persistent local note area for commands, IDs, URLs, and quick notes.',icon:icons.scratch,cat:'Workspace',keys:'scratchpad notes commands ids urls temporary persistent local',view:scratchView}
+{id:'scratch',name:'Scratchpad',desc:'A persistent local note area for commands, IDs, URLs, and quick notes.',icon:icons.scratch,cat:'Workspace',keys:'scratchpad notes commands ids urls temporary persistent local',view:scratchView},
+{id:'cron',name:'Cron Creator',desc:'Build and explain cron schedules visually.',icon:icons.cron,cat:'Generators',keys:'cron crontab schedule scheduler expression minute hour day month weekday job',view:cronView}
 ];
 function persist(){localStorage.setItem('dt_theme',state.theme);localStorage.setItem('dt_favs',JSON.stringify(state.favs));localStorage.setItem('dt_recent',JSON.stringify(state.recent));localStorage.setItem('dt_collapsed',JSON.stringify(state.collapsed));}
 function toast(msg,type='good'){const d=document.createElement('div');d.className='toast '+type;d.textContent=msg;$('#toasts').appendChild(d);setTimeout(()=>d.remove(),2400)}
@@ -509,7 +510,7 @@ function renderSidebar(){const cats={};tools.forEach(t=>(cats[t.cat]??=[]).push(
 function renderActiveFavorite(){const t=toolById(state.active);if(t){$$(`[data-fav="${t.id}"]`).forEach(x=>x.classList.toggle('on',state.favs.includes(t.id)))} }
 function openView(id){state.active=id;if(id==='home'){renderHome();renderSidebar();return}const t=toolById(id);if(!t)return;touchRecent(id);$('#content').innerHTML=t.view();renderSidebar();wireGlobalTool(t.id)}
 function toolShell(t,body){return `<div class="hero"><div><h1>${esc(t.name)}</h1><p>${esc(t.desc)}</p></div><div class="tag-row"><span class="tag">${esc(t.cat)}</span><button class="btn ghost" id="favoriteTool">★ ${state.favs.includes(t.id)?'Favourited':'Favourite'}</button></div></div><div class="tool-card"><div class="tool-head"><div class="tool-icon">${t.icon}</div><div><h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p></div><div class="head-actions"></div></div><div class="tool-body">${body}</div></div>`}
-function renderHome(){let recent=state.recent.map(toolById).filter(Boolean);$('#content').innerHTML=`<div class="hero"><div><h1>Developer utilities, in one place.</h1><p>Fast, local-first tools for everyday development work. Your inputs stay in this tab unless the browser itself needs an external platform service.</p></div><div class="tag-row"><span class="tag">21 tools</span><span class="tag">Client-side</span><span class="tag">Keyboard-first</span></div></div><div id="smartPaste" class="hidden"></div>${recent.length?`<div class="section-label">Recently used</div><div class="home-grid">${recent.map(homeCard).join('')}</div>`:''}<div class="section-label">All tools</div><div class="home-grid">${tools.map(homeCard).join('')}</div>`;$$('[data-open-tool]').forEach(b=>b.addEventListener('click',()=>openView(b.dataset.openTool)));}
+function renderHome(){let recent=state.recent.map(toolById).filter(Boolean);$('#content').innerHTML=`<div class="hero"><div><h1>Developer utilities, in one place.</h1><p>Fast, local-first tools for everyday development work. Your inputs stay in this tab unless the browser itself needs an external platform service.</p></div><div class="tag-row"><span class="tag">22 tools</span><span class="tag">Client-side</span><span class="tag">Keyboard-first</span></div></div><div id="smartPaste" class="hidden"></div>${recent.length?`<div class="section-label">Recently used</div><div class="home-grid">${recent.map(homeCard).join('')}</div>`:''}<div class="section-label">All tools</div><div class="home-grid">${tools.map(homeCard).join('')}</div>`;$$('[data-open-tool]').forEach(b=>b.addEventListener('click',()=>openView(b.dataset.openTool)));}
 function homeCard(t){return `<button class="home-tool" data-open-tool="${t.id}"><div class="tool-icon">${t.icon}</div><div><div class="title">${esc(t.name)}</div><div class="desc">${esc(t.desc)}</div></div></button>`}
 function wireGlobalTool(id){const fav=$('#favoriteTool');if(fav)fav.onclick=()=>{state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];persist();renderSidebar();fav.textContent='★ '+(state.favs.includes(id)?'Favourited':'Favourite')};wireSmartPaste();}
 function btn(id,label,cls='btn ghost'){return `<button class="${cls}" id="${id}">${label}</button>`}
@@ -599,6 +600,58 @@ function pathView(){return toolShell(toolById('path'),`<div class="stack"><div c
 function wirePath(){const i=$('#pathInput'),tree=$('#pathTree'),s=$('#pathStatus');function renderNode(v,path,label){if(v&&typeof v==='object'){const entries=Array.isArray(v)?v.map((x,n)=>[n,x]):Object.entries(v);const inner=entries.map(([k,val])=>{const p=Array.isArray(v)?`${path}[${k}]`:(path?`${path}.${k}`:String(k));const key=Array.isArray(v)?`[${k}]`:esc(k);return val&&typeof val==='object'?`<div class="tree-node"><button class="tree-toggle" data-toggle="${esc(p)}">▾</button><span class="tree-key">${key}</span> <span class="tree-path" data-path="${esc(p)}">${esc(p)}</span><div class="tree-child" data-parent="${esc(p)}">${renderNode(val,p,'')}</div></div>`:`<div class="tree-node"><span class="tree-key">${key}:</span> <span>${esc(typeof val==='string'?JSON.stringify(val):String(val))}</span> <span class="tree-path" data-path="${esc(p)}">${esc(p)}</span></div>`}).join('');return inner}return esc(String(v))}function run(){try{const v=JSON.parse(i.value);tree.innerHTML=renderNode(v,'','');s.textContent='Tree ready';s.className='status good'}catch(e){tree.textContent='Invalid JSON: '+e.message;s.textContent='Invalid JSON';s.className='status bad'}}$('#pathLoad').onclick=run;$('#pathClear').onclick=()=>{i.value='';tree.textContent='No JSON loaded.';s.textContent='Click any path to copy it.';s.className='status'};tree.addEventListener('click',e=>{const p=e.target.closest('[data-path]');if(p)copyText(p.dataset.path);const t=e.target.closest('[data-toggle]');if(t){const child=t.parentElement.querySelector('.tree-child');const open=child.style.display!=='none';child.style.display=open?'none':'';t.textContent=open?'▸':'▾'}})}
 function scratchView(){return toolShell(toolById('scratch'),`<div class="stack"><div class="toolbar"><span class="status good">Saved automatically in this browser</span><span class="spacer"></span>${btn('scratchClear','Clear','btn ghost danger')}</div><textarea id="scratchInput" class="scratch" spellcheck="false" placeholder="Temporary commands, IDs, URLs, snippets, notes…"></textarea><div class="note">Scratchpad content is stored only in localStorage under a non-sensitive app preference key.</div></div>`)}
 function wireScratch(){const i=$('#scratchInput'),key='dt_scratchpad';i.value=localStorage.getItem(key)||'';i.addEventListener('input',()=>localStorage.setItem(key,i.value));$('#scratchClear').onclick=()=>{if(confirm('Clear the local scratchpad?')){i.value='';localStorage.removeItem(key)}}}
+const CRON_PRESETS=[
+  ['Every minute','* * * * *'],
+  ['Every 5 minutes','*/5 * * * *'],
+  ['Every 15 minutes','*/15 * * * *'],
+  ['Hourly','0 * * * *'],
+  ['Daily at midnight','0 0 * * *'],
+  ['Daily at 09:00','0 9 * * *'],
+  ['Weekdays at 09:00','0 9 * * 1-5'],
+  ['Weekly Monday 09:00','0 9 * * 1'],
+  ['Monthly on the 1st at 09:00','0 9 1 * *'],
+  ['Every Sunday at 18:00','0 18 * * 0']
+];
+function cronFieldOptions(){return {minute:['*','0','*/5','*/10','*/15','*/30','1-5','0,15,30,45'],hour:['*','0','9','12','18','*/2','9-17','0,6,12,18'],dom:['*','1','15','1-5','*/2'],month:['*','1','2','3','4','5','6','7','8','9','10','11','12'],dow:['*','0','1','2','3','4','5','6','1-5','0,6']}}
+function cronField(name,id,choices){return `<div class="field"><label>${esc(name)}</label><select id="${id}">${choices.map(v=>`<option value="${v}">${v}</option>`).join('')}</select></div>`}
+function cronExplain(expr){
+  const p=expr.trim().split(/\s+/); if(p.length!==5) return 'Enter five cron fields: minute hour day-of-month month day-of-week.';
+  const [mi,hr,dom,mo,dow]=p;
+  const bits=[];
+  if(mi==='*'&&hr==='*'&&dom==='*'&&mo==='*'&&dow==='*') bits.push('Runs every minute.');
+  else {
+    if(mi.startsWith('*/')) bits.push(`Runs every ${mi.slice(2)} minutes.`); else if(mi==='*') bits.push('Every minute'); else bits.push(`At minute ${mi}`);
+    if(hr==='*') bits.push('every hour'); else if(hr.startsWith('*/')) bits.push(`every ${hr.slice(2)} hours`); else bits.push(`during hour ${hr}`);
+    if(dom!=='*') bits.push(`on day ${dom} of the month`);
+    if(mo!=='*') bits.push(`in month ${mo}`);
+    if(dow!=='*') bits.push(`on weekday ${dow}`);
+    return bits.join(', ')+'.';
+  }
+  return bits.join(' ');
+}
+function cronView(){
+  const o=cronFieldOptions();
+  return toolShell(toolById('cron'),`<div class="stack">
+    <div class="note">Standard 5-field cron syntax: <span class="mono">minute hour day-of-month month day-of-week</span>. This generator builds expressions locally in your browser.</div>
+    <div class="grid-3">${cronField('Minute','cronMinute',o.minute)}${cronField('Hour','cronHour',o.hour)}${cronField('Day of month','cronDom',o.dom)}${cronField('Month','cronMonth',o.month)}${cronField('Day of week','cronDow',o.dow)}<div class="field"><label>Quick preset</label><select id="cronPreset"><option value="">Select preset…</option>${CRON_PRESETS.map(([n,v])=>`<option value="${v}">${esc(n)}</option>`).join('')}</select></div></div>
+    <div class="toolbar">${btn('cronGenerate','Generate','btn primary')}${btn('cronCopy','Copy expression')}${btn('cronClear','Reset','btn ghost danger')}<span class="spacer status" id="cronStatus">Ready</span></div>
+    <div class="field"><label>Cron expression</label><input id="cronExpression" class="mono" value="0 9 * * 1-5" spellcheck="false"></div>
+    <div class="output" id="cronExplain">Weekdays at 09:00.</div>
+    <div class="note"><strong>Common syntax:</strong> <span class="mono">*</span> any value · <span class="mono">*/15</span> every 15 units · <span class="mono">1-5</span> range · <span class="mono">1,15</span> list.</div>
+  </div>`);
+}
+function wireCron(){
+  const ids=['cronMinute','cronHour','cronDom','cronMonth','cronDow'];
+  const expr=$('#cronExpression'),explain=$('#cronExplain'),status=$('#cronStatus'),preset=$('#cronPreset');
+  const sync=()=>{const value=ids.map(id=>$('#'+id).value).join(' ');expr.value=value;explain.textContent=cronExplain(value);status.textContent='Generated locally';status.className='status good'};
+  $('#cronGenerate').onclick=()=>sync();
+  $('#cronCopy').onclick=()=>copyText(expr.value);
+  $('#cronClear').onclick=()=>{preset.value='';['cronMinute','cronHour','cronDom','cronMonth','cronDow'].forEach((id,i)=>$('#'+id).value=['0','9','*','*','1-5'][i]);sync();status.textContent='Reset'};
+  preset.onchange=()=>{if(!preset.value)return;const v=preset.value.trim().split(/\s+/);if(v.length===5){v.forEach((x,i)=>$('#'+ids[i]).value=x);expr.value=preset.value;explain.textContent=cronExplain(preset.value);status.textContent='Preset applied';status.className='status good'}};
+  expr.addEventListener('input',()=>{explain.textContent=cronExplain(expr.value);status.textContent='Custom expression';status.className='status'});
+  ids.forEach(id=>$('#'+id).addEventListener('change',sync));
+  sync();
+}
 function smartDetect(value){
   const v=value.trim();
   if(!v)return null;
@@ -618,7 +671,7 @@ function paletteItems(q){const n=q.trim().toLowerCase();const list=tools.filter(
 function openPalette(){const p=$('#palette'),i=$('#paletteInput');p.classList.add('open');i.value='';$('#paletteList').innerHTML=paletteItems('');i.focus()}function closePalette(){$('#palette').classList.remove('open')}
 $('#paletteBtn').onclick=openPalette;$('#palette').addEventListener('click',e=>{if(e.target===e.currentTarget)closePalette()});$('#paletteInput').addEventListener('input',e=>$('#paletteList').innerHTML=paletteItems(e.target.value));$('#paletteList').addEventListener('click',e=>{const b=e.target.closest('[data-palette]');if(b){openView(b.dataset.palette);closePalette()}});document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openPalette()}if(e.key==='Escape')closePalette()});$('#themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';persist();setTheme()};$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').onclick=async()=>{if(!window.deferredPrompt)return;window.deferredPrompt.prompt();await window.deferredPrompt.userChoice;window.deferredPrompt=null;$('#installBtn').hidden=true};
-function wireActive(){const id=state.active;if(id==='json')wireJson();if(id==='jwt')wireJwt();if(id==='uuid')wireUuid();if(id==='time')wireTime();if(id==='base64')wireBase64();if(id==='url')wireUrl();if(id==='regex')wireRegex();if(id==='qr')wireQr();if(id==='text')wireText();if(id==='hash')wireHash();if(id==='diff')wireDiff();if(id==='count')wireCount();if(id==='http')wireHttp();if(id==='xml')wireXml();if(id==='csvjson')wireCsvJson();if(id==='escape')wireEscape();if(id==='image64')wireImage64();if(id==='meta')wireMeta();if(id==='path')wirePath();if(id==='scratch')wireScratch();}
+function wireActive(){const id=state.active;if(id==='json')wireJson();if(id==='jwt')wireJwt();if(id==='uuid')wireUuid();if(id==='time')wireTime();if(id==='base64')wireBase64();if(id==='url')wireUrl();if(id==='regex')wireRegex();if(id==='qr')wireQr();if(id==='text')wireText();if(id==='hash')wireHash();if(id==='diff')wireDiff();if(id==='count')wireCount();if(id==='http')wireHttp();if(id==='xml')wireXml();if(id==='csvjson')wireCsvJson();if(id==='escape')wireEscape();if(id==='image64')wireImage64();if(id==='meta')wireMeta();if(id==='path')wirePath();if(id==='scratch')wireScratch();if(id==='cron')wireCron();}
 const oldOpen=openView;openView=function(id){oldOpen(id);wireActive()};
 function initCardGlow(){
   let raf=0,lastTarget=null,lastX=0,lastY=0;
