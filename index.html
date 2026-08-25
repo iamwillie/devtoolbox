@@ -6,9 +6,13 @@
 <meta name="theme-color" content="#0b0f14">
 <meta name="description" content="DevToolbox — privacy-focused developer utilities that run locally in your browser.">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="DevToolbox">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="DevToolbox">
+<link rel="manifest" href="./manifest.webmanifest">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22DevToolbox%22%2C%22short_name%22%3A%22DevToolbox%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0f14%22%2C%22theme_color%22%3A%22%230b0f14%22%2C%22description%22%3A%22Privacy-focused%20developer%20utilities.%22%7D">
 <title>DevToolbox</title>
 <style>
 :root{--bg:#0b0f14;--panel:#11161d;--panel2:#151b23;--panel3:#0e1319;--text:#e6edf3;--muted:#8b98a7;--faint:#5e6976;--border:#27313d;--accent:#61dafb;--accent2:#8b9cf5;--success:#57d9a3;--warn:#f0c674;--danger:#ff6b7a;--shadow:0 14px 40px rgba(0,0,0,.24);--radius:12px;--font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}
@@ -639,7 +643,87 @@ setTheme();renderSidebar();renderHome();wireSmartPaste();
 </script>
 
 <script>
-if ('serviceWorker' in navigator) {
+/* Nexus-style standalone/PWA support */
+const STANDALONE_MODE =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+document.body.classList.toggle('standalone', STANDALONE_MODE);
+
+(function setupEmbeddedManifest(){
+  try{
+    const startUrl = location.href.split('#')[0];
+    const manifest = {
+      id: startUrl,
+      name: 'DevToolbox',
+      short_name: 'DevToolbox',
+      description: 'Privacy-focused developer utilities.',
+      start_url: startUrl,
+      scope: new URL('.', startUrl).href,
+      display: 'standalone',
+      display_override: ['window-controls-overlay','standalone','minimal-ui'],
+      orientation: 'any',
+      background_color: '#04060b',
+      theme_color: '#04060b',
+      icons: [{
+        src: './icons/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any maskable'
+      },{
+        src: './icons/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable'
+      }]
+    };
+    const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = url;
+    document.head.appendChild(link);
+  }catch(error){
+    console.warn('DevToolbox embedded manifest setup skipped:', error);
+  }
+})();
+
+let deferredInstallPrompt = null;
+const installBtn = document.getElementById('installAppBtn');
+
+function refreshInstallButton(){
+  if(!installBtn) return;
+  if(STANDALONE_MODE){
+    installBtn.hidden = true;
+    return;
+  }
+  installBtn.hidden = !deferredInstallPrompt;
+}
+
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  refreshInstallButton();
+});
+
+installBtn?.addEventListener('click', async () => {
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const choice = await deferredInstallPrompt.userChoice;
+  if(choice.outcome === 'accepted'){
+    deferredInstallPrompt = null;
+    refreshInstallButton();
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  refreshInstallButton();
+  if(typeof toast === 'function') toast('DevToolbox installed');
+});
+
+refreshInstallButton();
+
+if('serviceWorker' in navigator){
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   });
